@@ -1,5 +1,6 @@
-display_w = 800
-display_h = 800
+display_w = 1000
+display_h = 700
+display_middle = (display_w/2, display_h/2)
 caption = 'Bubble Trouble but worse'
 
 # colours
