@@ -1,11 +1,12 @@
-import constants, time, random, pygame
+import time, random, pygame
+from constants import *
 pygame.init()
 
 #create display
-Display = pygame.display.set_mode((default.display_width , default.display_height))
+Display = pygame.display.set_mode((DISP_W,DISP_H))
 
 # Change title of window
-pygame.display.set_caption(default.caption)
+pygame.display.set_caption(CAPTION)
 
 # Game specific clock
 clock = pygame.time.Clock()
@@ -13,7 +14,6 @@ clock = pygame.time.Clock()
 
 def main():
 	print('program start')
-
 	while True:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
