@@ -1,32 +1,32 @@
 import time, random
 import pygame as pg
 from constants import *
-pygame.init()
+pg.init()
 
 #create display
-display = pygame.display.set_mode((DISP_W,DISP_H))
+display = pg.display.set_mode((DISP_W,DISP_H))
 
 # Change title of window
-pygame.display.set_caption(CAPTION)
+pg.display.set_caption(CAPTION)
 
 # Game specific clock
-clock = pygame.time.Clock()
+clock = pg.time.Clock()
 
 def drawBackground():
 	display.fill(LIGHT_GRAY)
-	#pygame.draw.rect(display,BLACK,10)
-	#pygame.draw.rect()
+	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
+	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
 def main():
 	print('program start')
 	while True:
 		drawBackground()
 
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				pygame.quit()
+		for event in pg.event.get():
+			if event.type == pg.QUIT:
+				pg.quit()
 				quit()
 
-		pygame.display.update()
+		pg.display.update()
 		
 		clock.tick(60)
 
