@@ -1,14 +1,14 @@
-import default, time, random, pygame
+import constants, time, random, pygame
 pygame.init()
 
 #create display
-Display = pygame.display.set_mode((default.display_width , default.display_height)) 
+Display = pygame.display.set_mode((default.display_width , default.display_height))
 
 # Change title of window
-pygame.display.set_caption(default.caption) 
+pygame.display.set_caption(default.caption)
 
 # Game specific clock
-clock = pygame.time.Clock() 
+clock = pygame.time.Clock()
 
 
 def main():
