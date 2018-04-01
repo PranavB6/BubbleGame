@@ -1,10 +1,10 @@
-display_w = 800
-display_h = 800
-caption = 'Bubble Trouble but worse'
+DISP_W = 800
+DISP_H = 800
+CAPTION = 'Bubble Trouble but worse'
 
 # colours
-black = (0, 0, 0 )
-white = (255, 255, 255)
-red   = (255, 0, 0)
-green = (0, 255, 0)
-blue  = (0, 0, 255)
+BLACK = (0, 0, 0 )
+WHITE = (255, 255, 255)
+RED   = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE  = (0, 0, 255)
