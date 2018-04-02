@@ -20,33 +20,54 @@ def drawBackground():
 	pg.draw.rect(display,DARK_GRAY, WALL_RECT_L)
 	pg.draw.rect(display,DARK_GRAY, WALL_RECT_R)
 
-def getImg():
-	gun_og = pg.image.load('gun.png').convert()
-	gun_og_rect = gun_og.get_rect()
+def getGun():
 
-	gun_og_rect_w = gun_og_rect[2]
-	gun_og_rect_h = gun_og_rect[3]
+	# Load image
+	gun = pg.image.load('gun.png').convert_alpha()
 
+	# Get width and height
+	gun_rect = gun.get_rect()
+	gun_w = gun_rect[2]
+	gun_h = gun_rect[3]
 
+	# Scale image
 	sf = 0.25
-	gun_og = pg.transform.scale(gun_og, (int(gun_og_rect_w * sf), int(gun_og_rect_h * sf)))
+	gun = pg.transform.scale(gun, (int(gun_w * sf), int(gun_h * sf)))
 
-	return gun_og
+	# Scale Image
+	return gun
+
+
+def putGunInBox(gun):
+
+	# Get gun dimensions
+	gun_rect = gun.get_rect()
+	gun_w = gun_rect[2]
+	gun_h = gun_rect[3]
+
+	# Make a box to put gun in
+	# Surface((width, height), flags=0, depth=0, masks=None) -> Surface
+	gun_box = pg.Surface((gun_w, gun_h*2))
+	gun_box.fill(WHITESMOKE)
+
+	# Put gun in box
+	gun_box.blit(gun, gun_rect)
+
+	return gun_box
+
 
 def main():
 
 	print('program start')
 
 	# ------------------------------
-
-
-	image_og = getImg()
-	image_og_rect = image_og.get_rect( center = display_rect.center) # center = (display_rect.center)
+	gun = getGun()
+	gun_box = putGunInBox(gun)
 	angle = 0
-
 	# ---------------------
 
 	while True:
+
 		drawBackground()
 
 		for event in pg.event.get():
@@ -55,10 +76,15 @@ def main():
 				quit()
 
 		angle += 1
-		gun = pg.transform.rotate(image_og, angle)
-		gun_rect = gun.get_rect( center = (450,650))
+		
+		# Note: Don't change the original image, you will slowly lose information
+		# Rotate the box
+		rotated_box = pg.transform.rotate(gun_box, angle)
 
-		display.blit(gun, gun_rect)
+		# Display the box on the screen
+		# Note: center is the pivot point
+		display.blit(rotated_box, rotated_box.get_rect( center = display_rect.center))
+
 		pg.display.update()
 		
 		clock.tick(60)
@@ -68,5 +94,4 @@ def main():
 	return
 
 
-if __name__ == '__main__':
-	main()
+if __name__ == '__main__': main()
