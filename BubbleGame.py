@@ -65,6 +65,7 @@ def calcArrowHead(arrow_angle):
 	y = ARROW_BASE[1] - y
 	return (x,y)
 
+
 def calcMouseAngle(mouse_pos):
 	width = mouse_pos[0] - ARROW_BASE[0]
 	height = (ARROW_BASE[1] - mouse_pos[1])
