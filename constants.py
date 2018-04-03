@@ -23,4 +23,5 @@ ARROW_BASE = (int(DISP_W/2),DISP_H)
 ARROW_LENGTH = 80
 
 #Moving Bubble Constants
-BALL_VEL = 50
+BUBBLE_VEL = 4
+BUBBLE_DIAMETER = 10
