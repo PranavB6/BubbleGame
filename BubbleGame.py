@@ -49,8 +49,14 @@ class bullet(bubble):
 		x_pos += self.x_vel
 		y_pos -= self.y_vel
 		self.pos = (x_pos,y_pos)
+
+		if self.pos[0]-BUBBLE_DIAMETER <= WALL_BOUND_L:
+			self.x_vel = self.x_vel * -1
+		elif self.pos[0]+BUBBLE_DIAMETER >= WALL_BOUND_R:
+			self.x_vel = self.x_vel * -1
 		print("POST"+str(self.pos))
 		self.draw()
+
 def drawBackground():
 	display.fill(LIGHT_GRAY)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
@@ -100,10 +106,7 @@ def main():
 		drawArrow(mouse_angle)
 		try:
  			gameBullet.updatePos()
-		except NameError:
-			print("Bullet not created")
-			pass
-
+		except Exception as e: print(e)
 		pg.display.update()
 		
 		clock.tick(60)
