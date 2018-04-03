@@ -1,3 +1,4 @@
+from math import *
 import pygame as pg
 DISP_W = 900
 DISP_H = 700
@@ -21,7 +22,9 @@ WALL_RECT_R = pg.Rect(WALL_BOUND_R,0,WALL_WIDTH,DISP_H)
 
 ARROW_BASE = (int(DISP_W/2),DISP_H)
 ARROW_LENGTH = 80
+ANGLE_MAX = 7*pi/8
+ANGLE_MIN = pi/8
 
 #Moving Bubble Constants
-BUBBLE_VEL = 4
+BUBBLE_VEL = 10
 BUBBLE_DIAMETER = 10
