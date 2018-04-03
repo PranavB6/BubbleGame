@@ -17,7 +17,6 @@ class bubble():
 	def __init__(self,color,pos):
 		self.diameter = BUBBLE_DIAMETER
 		self.color = color
-		#NOTE: MIGHT WANT TO CHANGE X AND Y TO SINGLE POINT
 		self.pos = pos
 	def draw(self):
 		pg.draw.circle(display,self.color,
@@ -76,6 +75,8 @@ def main():
 	print('program start')
 	mouse_angle = pi/2
 	gameBullet = None
+	preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
+	preBullet.draw()
 	while True:
 		drawBackground()
 		for event in pg.event.get():
@@ -90,7 +91,9 @@ def main():
 				if gameBullet:
 					pass
 				else:
-					gameBullet = bullet(WHITE,calcArrowHead(mouse_angle),mouse_angle)
+					gameBullet = bullet(preBullet.color,calcArrowHead(mouse_angle),mouse_angle)
+					preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
+					preBullet.draw()
 					gameBullet.draw()
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
@@ -98,14 +101,18 @@ def main():
 					pg.quit()
 					quit()
 		drawArrow(mouse_angle)
+
 		if gameBullet:
 			gameBullet.updatePos()
 			if gameBullet.out_of_bounds:
 				gameBullet = None
+		preBullet.draw()
 		pg.display.update()
 		clock.tick(60)
 	return
 
+	pg.draw.circle(display,self.color,
+			(int(self.pos[0]),int(self.pos[1])),self.diameter)
 
 if __name__ == '__main__':
 	main()
