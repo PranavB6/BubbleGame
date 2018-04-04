@@ -2,19 +2,9 @@ import time, random
 import pygame as pg
 from math import *
 from constants import *
+from bubbleObj import *
+from cursorFunctions import *
 pg.init()
-
-
-#grid
-
-#create display
-display = pg.display.set_mode((DISP_W,DISP_H))
-
-# Change title of window
-pg.display.set_caption(CAPTION)
-
-# Game specific clock
-clock = pg.time.Clock()
 
 class bubble():
 	def __init__(self,color,pos):
@@ -29,16 +19,19 @@ class gridBubble(bubble):
 		bubble.__init__(self,color,pos)
 		self.row = row
 		self.col = col
+		#self.pos = None
 		self.calcPos()
+		self.alive = True
 	def calcPos(self):
 		# x = BUBBLE_DIAMETER + self.col*BUBBLE_DIAMETER*2+WALL_BOUND_L
 		# y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
 		x = (self.col * ((ROOM_WIDTH-BUBBLE_DIAMETER) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_DIAMETER
 		if self.row%2 == 0:
 			x+=BUBBLE_DIAMETER
+		#y = random.randrange(0,DISP_H)
 		y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
 		self.pos = (x,y)
-		print(x,y)
+		#print(x,y)
 
 class bullet(bubble):
 	def __init__(self,color,pos,angle):
@@ -64,13 +57,8 @@ class bullet(bubble):
 			self.out_of_bounds = True
 		else:
 			self.out_of_bounds = False
-		print("POST"+str(self.pos))
 		self.draw()
-
-def drawBackground():
-	display.fill(BG_COLOUR)
-	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
-	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
+#grid
 
 def drawArrow(arrow_angle):
 	arrow_head = calcArrowHead(arrow_angle)
@@ -88,17 +76,59 @@ def calcMouseAngle(mouse_pos):
 	height = (ARROW_BASE[1] - mouse_pos[1])
 	angle = atan2(height,width)
 	return max(min(angle,ANGLE_MAX),ANGLE_MIN)
+#create display
+display = pg.display.set_mode((DISP_W,DISP_H))
+
+# Change title of window
+pg.display.set_caption(CAPTION)
+
+# Game specific clock
+clock = pg.time.Clock()
+def drawBackground():
+	display.fill(BG_COLOUR)
+	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
+	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
+
+
+class gameGrid():
+	def __init__(self):
+		self.rows = GRID_ROWS
+		self.grid = [[0]*GRID_COLS]*GRID_ROWS
+		for i in range(0,GRID_ROWS):
+			for j in range(0,GRID_COLS):
+				self.grid[i][j] = gridBubble(GREEN,None,i,j)
+				print(self.grid[i][j])
+				self.grid[i][j].draw()
+	def draw(self):
+		print("START")
+		for i in range(0,GRID_ROWS):
+			for j in range(0,GRID_COLS):
+				self.grid[i][j] = gridBubble(WHITE,None,i,j)
+				print(self.grid[i][j].pos)
+				self.grid[i][j].draw()
+				if self.grid[i][j]:
+					self.grid[i][j].draw()
+		print("END")
+
+	def check(self,bullet_pos):
+		for i in range(0,GRID_ROWS):
+			for j in range(0,GRID_COLS):
+				gridElement = self.grid[i][j]
+				if gridElement:
+					dx = gridElement.pos[0] - bullet_pos[0]
+					dy = gridElement.pos[1] - bullet_pos[1]
+					combRadius = BUBBLE_DIAMETER * 2
+					if((int(dx)^2)+(int(dy)^2)<int(combRadius)^2):
+						self.grid[i][j].color = RED
+					else:
+						self.grid[i][j].color = WHITE
+					
+	
+
 
 #------------------------------------------------------------
 #make grid object(?)
 #make grid a set pattern(?)
-def initGrid():
-	grid = [[0]*GRID_COLS]*GRID_ROWS
-	for i in range(0,GRID_ROWS):
-		for j in range(0,GRID_COLS):
-			print(i,j)
-			grid[i][j] = gridBubble(WHITE,None,i,j)
-			grid[i][j].draw()
 
 
 def main():
@@ -107,6 +137,8 @@ def main():
 	gameBullet = None
 	preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 	preBullet.draw()
+	gamegrid = gameGrid()
+
 	while True:
 		drawBackground()
 		for event in pg.event.get():
@@ -117,6 +149,7 @@ def main():
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 			if event.type == pg.MOUSEBUTTONDOWN:
+				gamegrid.check(mouse_pos)
 				#TODO: Implement singleton
 				if gameBullet:
 					pass
@@ -136,8 +169,9 @@ def main():
 			gameBullet.updatePos()
 			if gameBullet.out_of_bounds:
 				gameBullet = None
+
 		preBullet.draw()
-		initGrid()
+		gamegrid.draw()
 		pg.display.update()
 		clock.tick(60)
 	return
