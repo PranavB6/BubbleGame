@@ -4,6 +4,9 @@ from math import *
 from constants import *
 pg.init()
 
+
+#grid
+
 #create display
 display = pg.display.set_mode((DISP_W,DISP_H))
 
@@ -21,6 +24,21 @@ class bubble():
 	def draw(self):
 		pg.draw.circle(display,self.color,
 			(int(self.pos[0]),int(self.pos[1])),self.diameter)
+class gridBubble(bubble):
+	def __init__(self,color,pos,row,col):
+		bubble.__init__(self,color,pos)
+		self.row = row
+		self.col = col
+		self.calcPos()
+	def calcPos(self):
+		# x = BUBBLE_DIAMETER + self.col*BUBBLE_DIAMETER*2+WALL_BOUND_L
+		# y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
+		x = (self.col * ((ROOM_WIDTH-BUBBLE_DIAMETER) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_DIAMETER
+		if self.row%2 == 0:
+			x+=BUBBLE_DIAMETER
+		y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
+		self.pos = (x,y)
+		print(x,y)
 
 class bullet(bubble):
 	def __init__(self,color,pos,angle):
@@ -50,7 +68,7 @@ class bullet(bubble):
 		self.draw()
 
 def drawBackground():
-	display.fill(LIGHT_GRAY)
+	display.fill(BG_COLOUR)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
 
@@ -65,12 +83,23 @@ def calcArrowHead(arrow_angle):
 	y = ARROW_BASE[1] - y
 	return (x,y)
 
-
 def calcMouseAngle(mouse_pos):
 	width = mouse_pos[0] - ARROW_BASE[0]
 	height = (ARROW_BASE[1] - mouse_pos[1])
 	angle = atan2(height,width)
 	return max(min(angle,ANGLE_MAX),ANGLE_MIN)
+
+#------------------------------------------------------------
+#make grid object(?)
+#make grid a set pattern(?)
+def initGrid():
+	grid = [[0]*GRID_COLS]*GRID_ROWS
+	for i in range(0,GRID_ROWS):
+		for j in range(0,GRID_COLS):
+			print(i,j)
+			grid[i][j] = gridBubble(WHITE,None,i,j)
+			grid[i][j].draw()
+
 
 def main():
 	print('program start')
@@ -108,6 +137,7 @@ def main():
 			if gameBullet.out_of_bounds:
 				gameBullet = None
 		preBullet.draw()
+		initGrid()
 		pg.display.update()
 		clock.tick(60)
 	return
