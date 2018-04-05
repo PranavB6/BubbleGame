@@ -2,7 +2,13 @@ from math import *
 import pygame as pg
 DISP_W = 900
 DISP_H = 700
+BOTTOM_CENTER = (450,700)
 CAPTION = 'Bubble Trouble but worse'
+
+#create display
+display = pg.display.set_mode((DISP_W,DISP_H))
+display_rect = display.get_rect()
+pg.display.set_caption(CAPTION)
 
 # colours
 BLACK = (0, 0, 0 )
@@ -29,8 +35,9 @@ WALL_RECT_R = pg.Rect(WALL_BOUND_R,0,WALL_WIDTH,DISP_H)
 
 ARROW_BASE = (int(DISP_W/2),DISP_H)
 ARROW_LENGTH = 80
-ANGLE_MAX = 7*pi/8
-ANGLE_MIN = pi/8
+
+ANGLE_MAX = 180 - 15
+ANGLE_MIN = 0 + 15
 
 #Moving Bubble Constants
 BUBBLE_VEL = 10
