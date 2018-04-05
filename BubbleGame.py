@@ -94,19 +94,43 @@ def calcMouseAngle(mouse_pos):
 #------------------------------------------------------------
 #make grid object(?)
 #make grid a set pattern(?)
-def initGrid():
-	grid = [[0]*GRID_COLS]*GRID_ROWS
-	for i in range(0,GRID_ROWS):
-		for j in range(0,GRID_COLS):
-			#print(i,j)
-			grid[i][j] = gridBubble(WHITE,None,i,j)
-			grid[i][j].draw()
-
+class gameGrid():
+	def __init__(self):
+		self.rows = GRID_ROWS
+		self.grid = [[0 for x in range(GRID_COLS)] for y in range(GRID_ROWS)]
+		for i in range(GRID_ROWS):
+			for j in range(GRID_COLS):
+				self.grid[i][j] = gridBubble(GREEN,None,i,j)
+				# print(self.grid[i][j])
+				self.grid[i][j].draw()
+	def draw(self):
+		# print("START")
+		for i in range(GRID_ROWS):
+			for j in range(GRID_COLS):
+				self.grid[i][j] = gridBubble(WHITE,None,i,j)
+				# print(self.grid[i][j].pos)
+				self.grid[i][j].draw()
+				if self.grid[i][j]:
+					self.grid[i][j].draw()
+		# print("END")
+	def check(self,bullet_pos):
+		for i in range(GRID_ROWS):
+			for j in range(GRID_COLS):
+				gridElement = self.grid[i][j]
+				if gridElement:
+					dx = gridElement.pos[0] - bullet_pos[0]
+					dy = gridElement.pos[1] - bullet_pos[1]
+					combRadius = BUBBLE_DIAMETER * 2
+					if((int(dx)^2)+(int(dy)^2)<int(combRadius)^2):
+						self.grid[i][j].color = RED
+					else:
+						self.grid[i][j].color = WHITE
 
 def main():
 	print('program start')
 	mouse_angle = pi/2
 	gameBullet = None
+	gamegrid = gameGrid()
 	preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 	preBullet.draw()
 	while True:
@@ -128,6 +152,8 @@ def main():
 					preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 					preBullet.draw()
 					gameBullet.draw()
+					gamegrid.check(pg.mouse.get_pos())
+
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
@@ -140,7 +166,7 @@ def main():
 			if gameBullet.out_of_bounds:
 				gameBullet = None
 		preBullet.draw()
-		initGrid()
+		gamegrid.draw()
 		pg.display.update()
 		clock.tick(60)
 	return
