@@ -51,11 +51,8 @@ class Shooter():
 
 	# Rotates an image and displays it
 	def rotate(self, mouse_pos):
-		print(mouse_pos, end = ' ')
 		# Get angle of rotation (in degrees)
 		angle = self.calcMouseAngle(mouse_pos)
-
-		print(angle)
 
 		# Get a rotated version of the box to display. Note: don't keep rotating the original as that skews the image
 		rotated_box = pg.transform.rotate(self.shooter_box, angle)
