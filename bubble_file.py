@@ -10,11 +10,11 @@ class bubble():
 		if not color: self.color = BALL_COLOURS[random.randint(0, len(BALL_COLOURS) - 1)]
 		else: self.color = color
 
-		self.diameter = BUBBLE_DIAMETER
+		self.radius = BUBBLE_RADIUS
 		self.pos = pos
 
 	def draw(self):
-		pg.draw.circle(display, self.color, self.pos, self.diameter)
+		pg.draw.circle(display, self.color, (int(self.pos[0]), int(self.pos[1])), self.radius)
 
 class bullet(bubble):
 	def __init__(self, color , pos , angle):
@@ -24,9 +24,9 @@ class bullet(bubble):
 		self.out_of_bounds = False
 
 	def updatePos(self):
-		if self.pos[0]-BUBBLE_DIAMETER <= WALL_BOUND_L:
+		if self.pos[0]-BUBBLE_RADIUS <= WALL_BOUND_L:
 			self.x_vel = self.x_vel * -1
-		elif self.pos[0]+BUBBLE_DIAMETER >= WALL_BOUND_R:
+		elif self.pos[0]+BUBBLE_RADIUS >= WALL_BOUND_R:
 			self.x_vel = self.x_vel * -1
 		# print("X: "+str(self.x_vel))
 		# print("Y: "+str(self.y_vel))
@@ -35,32 +35,33 @@ class bullet(bubble):
 		y_pos = self.pos[1]
 		x_pos += self.x_vel
 		y_pos -= self.y_vel
-		self.pos = (int(round(x_pos)),int(round(y_pos)))
+		self.pos = (x_pos, y_pos)
 
-		if self.pos[1]-BUBBLE_DIAMETER <= 0:
+		if self.pos[1]-BUBBLE_RADIUS <= 0:
 			self.out_of_bounds = True
 		else:
 			self.out_of_bounds = False
 		self.draw()
 
 class gridBubble(bubble):
-	def __init__(self, row, col, color = None):		
+	def __init__(self, row, col, exists, color = None):		
 
 		self.row = row
 		self.col = col
 		self.alive = True
 		self.calcPos()
+		self.exists = exists
 
 		bubble.__init__(self, self.pos, color)		
 
 	def calcPos(self):
-		# x = BUBBLE_DIAMETER + self.col*BUBBLE_DIAMETER*2+WALL_BOUND_L
-		# y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
-		x = (self.col * ((ROOM_WIDTH-BUBBLE_DIAMETER) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_DIAMETER
+		# x = BUBBLE_RADIUS + self.col*BUBBLE_RADIUS*2+WALL_BOUND_L
+		# y = BUBBLE_RADIUS + self.row*BUBBLE_RADIUS*2
+		x = (self.col * ((ROOM_WIDTH-BUBBLE_RADIUS) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_RADIUS
 		if self.row%2 == 0:
-			x+=BUBBLE_DIAMETER
+			x+=BUBBLE_RADIUS
 		#y = random.randrange(0,DISP_H)
-		y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
+		y = BUBBLE_RADIUS + self.row*BUBBLE_RADIUS*2
 		self.pos = (int(x),int(y))
 		#print(x,y)
 
