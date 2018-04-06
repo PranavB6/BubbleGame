@@ -1,31 +1,25 @@
 from constants import *
 import math, random
+from bubble_file import *
 import pygame as pg
 pg.init()
 
 class gameGrid():
 	def __init__(self):
 		self.rows = GRID_ROWS
-		self.grid = [[0]*GRID_COLS]*GRID_ROWS
-		for i in range(0,GRID_ROWS):
-			for j in range(0,GRID_COLS):
-				self.grid[i][j] = gridBubble(GREEN,None,i,j)
-				# print(self.grid[i][j])
-				self.grid[i][j].draw()
-	def draw(self):
-		# print("START")
-		for i in range(0,GRID_ROWS):
-			for j in range(0,GRID_COLS):
-				self.grid[i][j] = gridBubble(WHITE,None,i,j)
-				# print(self.grid[i][j].pos)
-				self.grid[i][j].draw()
-				if self.grid[i][j]:
-					self.grid[i][j].draw()
-		# print("END")
+		self.cols = GRID_COLS
 
-	def check(self,bullet_pos):
-		for i in range(0,GRID_ROWS):
-			for j in range(0,GRID_COLS):
+		self.grid = [[gridBubble(row, col) for col in range(self.cols)] for row in range(self.rows)]
+
+	def draw(self):
+
+		for row in range(self.rows):
+			for col in range(self.cols):
+				self.grid[row][col].draw()
+
+	def check(self, bullet_pos):
+		for i in range(self.rows):
+			for j in range(self.cols):
 				gridElement = self.grid[i][j]
 				if gridElement:
 					dx = gridElement.pos[0] - bullet_pos[0]

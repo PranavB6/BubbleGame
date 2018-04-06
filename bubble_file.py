@@ -12,15 +12,13 @@ class bubble():
 
 		self.diameter = BUBBLE_DIAMETER
 		self.pos = pos
-		self.x = int(pos[0])
-		self.y = int(pos[1])
 
 	def draw(self):
-		pg.draw.circle(display, self.color, (self.x, self.y) , self.diameter)
+		pg.draw.circle(display, self.color, self.pos, self.diameter)
 
 class bullet(bubble):
 	def __init__(self, color , pos , angle):
-		bubble.__init__(self,color,pos)
+		bubble.__init__(self, pos, color)
 		self.x_vel = cos(angle) * BUBBLE_VEL
 		self.y_vel = sin(angle) * BUBBLE_VEL
 		self.out_of_bounds = False
@@ -37,7 +35,7 @@ class bullet(bubble):
 		y_pos = self.pos[1]
 		x_pos += self.x_vel
 		y_pos -= self.y_vel
-		self.pos = (x_pos,y_pos)
+		self.pos = (int(round(x_pos)),int(round(y_pos)))
 
 		if self.pos[1]-BUBBLE_DIAMETER <= 0:
 			self.out_of_bounds = True
@@ -46,13 +44,15 @@ class bullet(bubble):
 		self.draw()
 
 class gridBubble(bubble):
-	def __init__(self, pos, row, col, color = None):
-		bubble.__init__(self,color,pos)
+	def __init__(self, row, col, color = None):		
+
 		self.row = row
 		self.col = col
-		#self.pos = None
-		self.calcPos()
 		self.alive = True
+		self.calcPos()
+
+		bubble.__init__(self, self.pos, color)		
+
 	def calcPos(self):
 		# x = BUBBLE_DIAMETER + self.col*BUBBLE_DIAMETER*2+WALL_BOUND_L
 		# y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
@@ -61,7 +61,7 @@ class gridBubble(bubble):
 			x+=BUBBLE_DIAMETER
 		#y = random.randrange(0,DISP_H)
 		y = BUBBLE_DIAMETER + self.row*BUBBLE_DIAMETER*2
-		self.pos = (x,y)
+		self.pos = (int(x),int(y))
 		#print(x,y)
 
 

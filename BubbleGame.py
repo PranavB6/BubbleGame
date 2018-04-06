@@ -4,7 +4,7 @@ from math import *
 from constants import *
 from bubble_file import *
 from shooter_file import *
-# from grid_file import *
+from grid_file import *
 pg.init()
 
 
@@ -20,24 +20,19 @@ def drawBackground():
 
 def main():
 	print('program start')
-
-	# ----------------------------
-
-	gun = Shooter(center = BOTTOM_CENTER)
-	gun.putInBox()
-
-	# ----------------------------
-
-	mouse_angle = pi/2
 	mouse_pos = (0,0)
-	gameBullet = None
 
-	preBullet = bubble(BOTTOM_CENTER)
-	preBullet.draw()
-	# gamegrid = gameGrid()
+	# ----------------------------
+
+	gun = Shooter(pos = BOTTOM_CENTER)
+	gun.putInBox()
+	gamegrid = gameGrid()
+
+	# ----------------------------	
 
 	while True:
 		drawBackground()
+		
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
@@ -47,14 +42,7 @@ def main():
 
 			if event.type == pg.MOUSEBUTTONDOWN:
 				# gamegrid.check(mouse_pos)
-				#TODO: Implement singleton
-				if gameBullet:
-					pass
-				else:pass
-					# gameBullet = bullet(preBullet.color,calcArrowHead(mouse_angle),mouse_angle)
-					# preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
-					# preBullet.draw()
-					# gameBullet.draw()
+				gun.fire()
 
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
@@ -63,16 +51,12 @@ def main():
 					quit()
 
 
-		if gameBullet:
-			gameBullet.updatePos()
-			if gameBullet.out_of_bounds:
-				gameBullet = None
-
-		preBullet.draw()
-		# gamegrid.draw()
+		gamegrid.draw()
 
 		gun.rotate(mouse_pos)
-		preBullet.draw()
+		gun.draw_bullet()
+
+
 		pg.display.update()
 		clock.tick(60)
 
