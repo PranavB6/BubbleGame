@@ -95,20 +95,18 @@ class Shooter():
 
 	def draw_bullet(self):
 		self.loaded.draw()
-
 		if self.fired:
 			self.fired.updatePos()
-			if self.fired.out_of_bounds: self.fired = None
-
+			if self.fired.out_of_bounds:
+				print("HHHHHH")
+				self.fired = None
 		return
 
 	def fire(self):
-
 		rads = math.radians(self.angle)
 		if self.fired is None: 
 			self.fired = bullet( self.loaded.color, self.pos, rads )
 			self.loaded = bubble(WHITE,self.pos)
-
 		return
 '''
 def drawArrow(arrow_angle):

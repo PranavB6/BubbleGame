@@ -39,8 +39,6 @@ def main():
 	mouse_angle = pi/2
 	gameBullet = None
 	gamegrid = gameGrid()
-	preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
-	preBullet.draw()
 	mouse_pos=(0,0)
 	while not gameInstance.over:
 		drawBackground()
@@ -57,11 +55,7 @@ def main():
 				if gameBullet:
 					pass
 				else:
-					gameBullet = bullet(preBullet.color,ARROW_BASE,mouse_angle)
-					#gameBullet = bullet(preBullet.color,calcArrowHead(mouse_angle),mouse_angle)
-					preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
-					preBullet.draw()
-					gameBullet.draw()
+
 					gun.fire()
 
 			#Ctrl+C to quit
@@ -69,16 +63,16 @@ def main():
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
-		#Draw arrow
-		#drawArrow(mouse_angle)
-		#sudo singleton, should become actual singleton if we get time
-		if gameBullet:
-			gameBullet.updatePos()
-			gamegrid.check(gameBullet.pos,gameBullet)
-			if gameBullet.out_of_bounds:
-				gameBullet = None
-		#Check for collision
+	
+		# if gameBullet:
+		# 	gameBullet.updatePos()
+		# 	gamegrid.check(gameBullet.pos,gameBullet)
+		# 	if gameBullet.out_of_bounds:
+		# 		gameBullet = None
 		
+		if gun.fired:
+			gamegrid.check(gun.fired.pos,gun.fired)
+
 		gamegrid.checkGameOver(gameInstance)
 		gun.rotate(mouse_pos)
 		gun.draw_bullet()

@@ -34,12 +34,7 @@ class gameGrid():
 						dx = gridElement.pos[0] - bullet_pos[0]
 						dy = gridElement.pos[1] - bullet_pos[1]
 						combRadius = BUBBLE_RADIUS * 2
-						# print(str((int(dx)**2)+(int(dy)**2)))
-						# print("DD")
-						# print(str(int(dx)^2))
-						# if intersecting
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
-							#self.grid[i][j].color = RED
 							bullet.getGridPos(self)
 						else:
 							pass

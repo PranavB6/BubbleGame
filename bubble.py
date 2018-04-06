@@ -43,10 +43,6 @@ class bullet(bubble):
 		x_pos += self.x_vel
 		y_pos -= self.y_vel
 		self.pos = (x_pos,y_pos)
-		if self.pos[1] <= 0:
-			self.out_of_bounds = True
-		else:
-			self.out_of_bounds = False
 		self.draw()
 	def getGridPos(self,grid):
 		for i in range(grid.rows):	
