@@ -107,7 +107,7 @@ class gameGrid():
 						# print(str((int(dx)**2)+(int(dy)**2)))
 						# print("DD")
 						# print(str(int(dx)^2))
-						#if intersecting
+						# if intersecting
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 							#self.grid[i][j].color = RED
 							bullet.getGridPos(self)
@@ -118,7 +118,7 @@ class gameGrid():
 			if self.grid[self.rows-1][j].exists:
 				self.appendBottom()
 
-							#self.grid[i][j].color = WHITE
+			#self.grid[i][j].color = WHITE
 	def appendBottom(self):
 		row = []
 		for j in range(GRID_COLS):
@@ -176,7 +176,8 @@ def main():
 				if gameBullet:
 					pass
 				else:
-					gameBullet = bullet(preBullet.color,calcArrowHead(mouse_angle),mouse_angle)
+					gameBullet = bullet(preBullet.color,ARROW_BASE,mouse_angle)
+					#gameBullet = bullet(preBullet.color,calcArrowHead(mouse_angle),mouse_angle)
 					preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 					preBullet.draw()
 					gameBullet.draw()
