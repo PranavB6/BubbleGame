@@ -1,16 +1,17 @@
 from constants import *
 import math
+from bubble import *
 import pygame as pg
 pg.init()
 
 
 class Shooter():
 
-	def __init__(self, image = 'gun.png', center = display_rect.center):
+	def __init__(self, image = 'gun.png', pos = display_rect.center):
 
 		# center position of the image
-		self.center = center 
-		self.center_x, self.center_y = center[0], center[1]
+		self.pos = pos
+		self.pos_x, self.pos_y = pos[0], pos[1]
 
 		# Load image
 		self.shooter = pg.image.load(image).convert_alpha()
@@ -28,6 +29,11 @@ class Shooter():
 		self.shooter_rect = self.shooter.get_rect()
 		self.shooter_w = self.shooter_rect[2]
 		self.shooter_h = self.shooter_rect[3]
+
+
+		self.loaded = bubble(WHITE,self.pos)
+		self.fired = None
+		self.angle = 0
 
 		return
 
@@ -47,26 +53,39 @@ class Shooter():
 
 	# Cuz why not
 	def draw(self):
-		display.blit(self.shooter_box, self.center)
+		display.blit(self.shooter_box, self.pos)
+
+	def draw_line(self):
+
+		# line(Surface, color, start_pos, end_pos, width=1) -> Rect
+		end = ( (math.cos(math.radians(self.angle)) * 300) + display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * 300))
+		
+		pg.draw.line(display, WHITE, self.pos, end)
+
+		return
 
 	# Rotates an image and displays it
 	def rotate(self, mouse_pos):
 		# Get angle of rotation (in degrees)
-		angle = self.calcMouseAngle(mouse_pos)
+		self.angle = self.calcMouseAngle(mouse_pos)
 
 		# Get a rotated version of the box to display. Note: don't keep rotating the original as that skews the image
-		rotated_box = pg.transform.rotate(self.shooter_box, angle)
+		rotated_box = pg.transform.rotate(self.shooter_box, self.angle)
 
 		# display the image
-		display.blit(rotated_box, rotated_box.get_rect( center = self.center))
+		display.blit(rotated_box, rotated_box.get_rect( center = self.pos))
+
+		self.draw_line()
+
+		return
 
 	def calcMouseAngle(self, mouse_pos):
 		# Get mouse position and decompose it into x and y
 		mouse_x, mouse_y = mouse_pos[0], mouse_pos[1]
 
 		# Do some quick maths and get the angle
-		width = mouse_x - self.center_x
-		height = self.center_y - mouse_y
+		width = mouse_x - self.pos_x
+		height = self.pos_y - mouse_y
 		angle = math.atan2(height,width)
 		degrees = math.degrees(angle)		# convert to degrees
 
@@ -74,11 +93,21 @@ class Shooter():
 		return max(min( degrees , ANGLE_MAX), ANGLE_MIN)
 
 
-class Bullet():
+	def draw_bullet(self):
+		self.loaded.draw()
 
-	def __init__(self):
+		if self.fired:
+			self.fired.updatePos()
+			if self.fired.out_of_bounds: self.fired = None
 
+		return
 
+	def fire(self):
+
+		rads = math.radians(self.angle)
+		if self.fired is None: 
+			self.fired = bullet( self.loaded.color, self.pos, rads )
+			self.loaded = bubble(WHITE,self.pos)
 
 		return
 '''
