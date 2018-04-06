@@ -2,6 +2,7 @@ import time, random
 import pygame as pg
 from math import *
 from constants import *
+from collections import deque
 pg.init()
 
 
@@ -103,13 +104,12 @@ class gameGrid():
 				self.grid[i][j] = gridBubble(GREEN,None,i,j)
 				self.grid[i][j].draw()
 	def draw(self):
-		for i in range(GRID_ROWS):
+		for i in range(self.rows):
 			for j in range(GRID_COLS):
-				self.grid[i][j].draw()
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
 	def check(self,bullet_pos):
-		for i in range(GRID_ROWS):
+		for i in range(self.rows):
 			for j in range(GRID_COLS):
 				print(str(i)+","+str(j))
 				gridElement = self.grid[i][j]
@@ -123,6 +123,7 @@ class gameGrid():
 					#Consider not rounding it
 					if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 						self.grid[i][j].color = RED
+
 					else:
 						self.grid[i][j].color = WHITE
 
@@ -152,19 +153,23 @@ def main():
 					preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 					preBullet.draw()
 					gameBullet.draw()
-					gamegrid.check(pg.mouse.get_pos())
+					
 
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
-		#drawArrow(mouse_angle)
+		#Draw arrow
 		drawArrow(mouse_angle)
+		#sudo singleton, should become actual singleton if we get time
 		if gameBullet:
 			gameBullet.updatePos()
+			gamegrid.check(gameBullet.pos)
 			if gameBullet.out_of_bounds:
 				gameBullet = None
+		#Check for collision
+		
 		preBullet.draw()
 		gamegrid.draw()
 		pg.display.update()
