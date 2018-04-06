@@ -69,12 +69,15 @@ class bullet(bubble):
 				#Check if balls x is within a given slot
 				if not grid.grid[i][j].exists:
 					print("SFDFDS")
-					if grid.grid[i][j].pos[0]-BUBBLE_DIAMETER<self.pos[0]<grid.grid[i][j].pos[0]+BUBBLE_DIAMETER:
+					#TODO: COLLISIONS ARE NOT SPOT ON. WILL FAIL IF YOU FIRE HEAD ON.
+					if grid.grid[i][j].pos[0]-BUBBLE_DIAMETER<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_DIAMETER:
 						print("PASS 1")
 						if grid.grid[i][j].pos[1]-BUBBLE_DIAMETER<self.pos[1]<grid.grid[i][j].pos[1]+BUBBLE_DIAMETER:
 							print("HIT")
 							print(str(i)+","+str(j))
-							grid.grid[i][j].color=BLUE
+							grid.grid[i][j].color=self.color
+							grid.grid[i][j].exists=True
+							self.out_of_bounds=True
 	#TODO: implement a function that takes postions and snaps it onto the grid.
 class gameGrid():
 	def __init__(self):
@@ -106,10 +109,16 @@ class gameGrid():
 						# print(str(int(dx)^2))
 						#if intersecting
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
-							self.grid[i][j].color = RED
+							#self.grid[i][j].color = RED
 							bullet.getGridPos(self)
 						else:
-							self.grid[i][j].color = WHITE
+							pass
+		#Check if the bottom row is completely null, if not, add a null row
+		for j in range(GRID_COLS):
+			if self.grid[self.rows-1][j].exists:
+				self.appendBottom()
+
+							#self.grid[i][j].color = WHITE
 	def appendBottom(self):
 		row = []
 		for j in range(GRID_COLS):
