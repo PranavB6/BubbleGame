@@ -2,7 +2,7 @@ import time, random
 import pygame as pg
 from math import *
 from constants import *
-import numpy
+from graph import Graph
 #pretty easy to implement if we so choose
 #from collections import deque
 pg.init()
@@ -18,7 +18,12 @@ pg.display.set_caption(CAPTION)
 
 # Game specific clock
 clock = pg.time.Clock()
+#Global
+id_Count = 0
 
+class game():
+	def __init__(self):
+		self.over = False
 class bubble():
 	def __init__(self,color,pos):
 		self.diameter = BUBBLE_DIAMETER
@@ -35,6 +40,9 @@ class gridBubble(bubble):
 		self.col = col
 		self.exists = exists
 		self.calcPos()
+		# self.id = id_Count
+		# id_Count += 1
+
 	def calcPos(self):
 		x = (self.col * ((ROOM_WIDTH-BUBBLE_DIAMETER) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_DIAMETER
 		if self.row%2 == 0:
@@ -89,6 +97,7 @@ class gameGrid():
 				self.grid[i][j] = gridBubble(GREEN,None,i,j,True)
 				self.grid[i][j].draw()
 		self.appendBottom()
+		#self.graph = self.makeGraph()
 	def draw(self):
 		for i in range(self.rows):
 			for j in range(GRID_COLS):
@@ -118,6 +127,9 @@ class gameGrid():
 			if self.grid[self.rows-1][j].exists:
 				self.appendBottom()
 
+	def checkGameOver(self,game):
+		if self.rows == 20:
+			game.over == True
 			#self.grid[i][j].color = WHITE
 	def appendBottom(self):
 		row = []
@@ -125,6 +137,7 @@ class gameGrid():
 			row.append(gridBubble(BLACK,None,self.rows,j,False))
 		self.grid.append(row)	
 		self.rows += 1
+
 def drawBackground():
 	display.fill(BG_COLOUR)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
@@ -156,12 +169,13 @@ def calcMouseAngle(mouse_pos):
 
 def main():
 	#print('program start')
+	gameInstance = game()
 	mouse_angle = pi/2
 	gameBullet = None
 	gamegrid = gameGrid()
 	preBullet = bubble(BALL_COLOURS[random.randint(0,len(BALL_COLOURS)-1)],ARROW_BASE)
 	preBullet.draw()
-	while True:
+	while not gameInstance.over:
 		drawBackground()
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
@@ -197,14 +211,15 @@ def main():
 				gameBullet = None
 		#Check for collision
 		
+		gamegrid.checkGameOver(gameInstance)
 		preBullet.draw()
 		gamegrid.draw()
 		pg.display.update()
 		clock.tick(60)
 	return
 
-	pg.draw.circle(display,self.color,
-			(int(self.pos[0]),int(self.pos[1])),self.diameter)
+	# pg.draw.circle(display,self.color,
+	# 		(int(self.pos[0]),int(self.pos[1])),self.diameter)
 
 if __name__ == '__main__':
 	main()
