@@ -2,6 +2,7 @@ import time, random
 import pygame as pg
 from math import *
 from constants import *
+import numpy
 #pretty easy to implement if we so choose
 #from collections import deque
 pg.init()
@@ -28,10 +29,11 @@ class bubble():
 			(int(self.pos[0]),int(self.pos[1])),self.diameter)
 
 class gridBubble(bubble):
-	def __init__(self,color,pos,row,col):
+	def __init__(self,color,pos,row,col,exists):
 		bubble.__init__(self,color,pos)
 		self.row = row
 		self.col = col
+		self.exists = exists
 		self.calcPos()
 	def calcPos(self):
 		x = (self.col * ((ROOM_WIDTH-BUBBLE_DIAMETER) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_DIAMETER
@@ -65,15 +67,55 @@ class bullet(bubble):
 		for i in range(grid.rows):	
 			for j in range(grid.cols):
 				#Check if balls x is within a given slot
-				if not grid.grid[i][j]:
+				if not grid.grid[i][j].exists:
 					print("SFDFDS")
 					if grid.grid[i][j].pos[0]-BUBBLE_DIAMETER<self.pos[0]<grid.grid[i][j].pos[0]+BUBBLE_DIAMETER:
-						if grid.grid[i][j].pos[1]-BUBBLE_DIAMETER<self.pos[0]<grid.grid[i][j].pos[0]+BUBBLE_DIAMETER:
+						print("PASS 1")
+						if grid.grid[i][j].pos[1]-BUBBLE_DIAMETER<self.pos[1]<grid.grid[i][j].pos[1]+BUBBLE_DIAMETER:
 							print("HIT")
 							print(str(i)+","+str(j))
+							grid.grid[i][j].color=BLUE
 	#TODO: implement a function that takes postions and snaps it onto the grid.
-	
-
+class gameGrid():
+	def __init__(self):
+		self.rows = GRID_ROWS
+		self.cols = GRID_COLS
+		self.grid = [[0 for x in range(GRID_COLS)] for y in range(GRID_ROWS)]
+		for i in range(GRID_ROWS):
+			for j in range(GRID_COLS):
+				self.grid[i][j] = gridBubble(GREEN,None,i,j,True)
+				self.grid[i][j].draw()
+		self.appendBottom()
+	def draw(self):
+		for i in range(self.rows):
+			for j in range(GRID_COLS):
+				if self.grid[i][j]:
+					self.grid[i][j].draw()
+	def check(self,bullet_pos,bullet):
+		for i in range(self.rows):
+			for j in range(GRID_COLS):
+				# print(str(i)+","+str(j))
+				gridElement = self.grid[i][j]
+				if gridElement:
+					if gridElement.exists:
+						dx = gridElement.pos[0] - bullet_pos[0]
+						dy = gridElement.pos[1] - bullet_pos[1]
+						combRadius = BUBBLE_DIAMETER * 2
+						# print(str((int(dx)**2)+(int(dy)**2)))
+						# print("DD")
+						# print(str(int(dx)^2))
+						#if intersecting
+						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
+							self.grid[i][j].color = RED
+							bullet.getGridPos(self)
+						else:
+							self.grid[i][j].color = WHITE
+	def appendBottom(self):
+		row = []
+		for j in range(GRID_COLS):
+			row.append(gridBubble(BLACK,None,self.rows,j,False))
+		self.grid.append(row)	
+		self.rows += 1
 def drawBackground():
 	display.fill(BG_COLOUR)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
@@ -100,45 +142,7 @@ def calcMouseAngle(mouse_pos):
 #------------------------------------------------------------
 #make grid object(?)
 #make grid a set pattern(?)
-class gameGrid():
-	def __init__(self):
-		self.rows = GRID_ROWS
-		self.cols = GRID_COLS
-		self.grid = [[0 for x in range(GRID_COLS)] for y in range(GRID_ROWS)]
-		for i in range(GRID_ROWS):
-			for j in range(GRID_COLS):
-				self.grid[i][j] = gridBubble(GREEN,None,i,j)
-				self.grid[i][j].draw()
-		self.appendBottom()
-	def draw(self):
-		for i in range(self.rows):
-			for j in range(GRID_COLS):
-				print(str(i)+","+str(j))
-				if self.grid[i][j]:
-					self.grid[i][j].draw()
-	def check(self,bullet_pos,bullet):
-		for i in range(self.rows):
-			for j in range(GRID_COLS):
-				# print(str(i)+","+str(j))
-				gridElement = self.grid[i][j]
-				if gridElement:
-					dx = gridElement.pos[0] - bullet_pos[0]
-					dy = gridElement.pos[1] - bullet_pos[1]
-					combRadius = BUBBLE_DIAMETER * 2
-					# print(str((int(dx)**2)+(int(dy)**2)))
-					# print("DD")
-					# print(str(int(dx)^2))
-					#if intersecting
-					if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
-						bullet.getGridPos(self)
-					else:
-						self.grid[i][j].color = WHITE
-	def appendBottom(self):
-		row = []
-		for j in range(GRID_COLS):
-			row.append(None)
-		self.grid[self.cols].append(row)
-		self.rows += 1
+
 
 
 def main():
