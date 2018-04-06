@@ -73,7 +73,7 @@ def drawBackground():
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
 
 def drawArrow(arrow_angle):
-	print(arrow_angle)
+	#print(arrow_angle)
 	arrow_head = calcArrowHead(arrow_angle)
 	pg.draw.line(display,BLACK,ARROW_BASE,arrow_head)
 
@@ -101,33 +101,33 @@ class gameGrid():
 		for i in range(GRID_ROWS):
 			for j in range(GRID_COLS):
 				self.grid[i][j] = gridBubble(GREEN,None,i,j)
-				# print(self.grid[i][j])
 				self.grid[i][j].draw()
 	def draw(self):
-		# print("START")
 		for i in range(GRID_ROWS):
 			for j in range(GRID_COLS):
-				self.grid[i][j] = gridBubble(WHITE,None,i,j)
-				# print(self.grid[i][j].pos)
 				self.grid[i][j].draw()
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
-		# print("END")
 	def check(self,bullet_pos):
 		for i in range(GRID_ROWS):
 			for j in range(GRID_COLS):
+				print(str(i)+","+str(j))
 				gridElement = self.grid[i][j]
 				if gridElement:
 					dx = gridElement.pos[0] - bullet_pos[0]
 					dy = gridElement.pos[1] - bullet_pos[1]
 					combRadius = BUBBLE_DIAMETER * 2
-					if((int(dx)^2)+(int(dy)^2)<int(combRadius)^2):
+					print(str((int(dx)**2)+(int(dy)**2)))
+					print("DD")
+					print(str(int(dx)^2))
+					#Consider not rounding it
+					if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 						self.grid[i][j].color = RED
 					else:
 						self.grid[i][j].color = WHITE
 
 def main():
-	print('program start')
+	#print('program start')
 	mouse_angle = pi/2
 	gameBullet = None
 	gamegrid = gameGrid()
