@@ -83,8 +83,13 @@ class gridBubble(bubble):
 
 		for neighb in neighbs:
 			if neighb: alive.append(neighb)
-
 		return alive
+
+	def updateNeighbs(self,grid):
+		neighbs = self.getNeighbs()
+		for neighb in neighbs:
+			grid.grid[neighb[0]][neighb[1]].initNeighb(grid)
+
 	#MIGHT CAUSE NAMESPACE ISSUES
 
 	def popSelf(self):
@@ -112,7 +117,8 @@ class bullet(bubble):
 	def getGridPos(self,grid):
 		for i in range(grid.rows):	
 			for j in range(grid._cols):
-				#Check if balls x is within a given slot
+
+				# Check if balls x is within a given slot
 				if not grid.grid[i][j].exists:
 					# print("SFDFDS")
 					#TODO: COLLISIONS ARE NOT SPOT ON. WILL FAIL IF YOU FIRE HEAD ON.

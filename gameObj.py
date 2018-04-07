@@ -45,9 +45,15 @@ class gameGrid():
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 							##BULLET HITS GRID##
 							bulletGridPos = bullet.getGridPos(self)
-							#print(bulletGridPos)
+							
 							if bulletGridPos:
+
+								print('-------------------------------')
+								print('Bullet Grid Position:', bulletGridPos[0], bulletGridPos[1] )
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
+								self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
+
+
 								#print (self.grid[bulletGridPos[0]][bulletGridPos[1]].getNeighbs())
 								self.popCluster(bulletGridPos)
 
@@ -88,7 +94,10 @@ class gameGrid():
 		return
 
 	def popCluster(self,bulletGridPos):
+		
+		print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
+		print()
 
 		if len(reached)>=3:
 			time.sleep(0.1)
@@ -102,7 +111,10 @@ class gameGrid():
 		#print(bubble)
 		
 
-		if reached == None: reached = []
+		if reached == None: 
+			reached = []
+
+			print('Comrads:', end = ' ')
 		if bubble in reached: return
 
 		reached.append(bubble)
@@ -112,7 +124,10 @@ class gameGrid():
 
 			if new_bubble.exists:
 				if new_bubble.color == bubble.color:
+					print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
 					self.search(new_bubble, reached)
+
+		
 
 		return reached
 
