@@ -24,7 +24,7 @@ class gameGrid():
 		self.appendBottom()
 		#self.graph = self.makeGraph()
 		self.initNeighb()
-		self.test()
+		#self.test()
 
 	def draw(self):
 		for i in range(self.rows):
@@ -42,7 +42,8 @@ class gameGrid():
 						dy = gridElement.pos[1] - bullet_pos[1]
 						combRadius = BUBBLE_RADIUS * 2
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
-							bullet.getGridPos(self)
+							bulletGridPos = bullet.getGridPos(self)
+							
 						else:
 							pass
 		#Check if the bottom row is completely null, if not, add a null row
@@ -85,9 +86,6 @@ class gameGrid():
 
 						if col > 0:
 							self.grid[row][col].DL = (row + 1,col - 1)					
-							
-
-
 				if row % 2 == 0:
 					if col > 0:
 						self.grid[row][col].L = (row, col - 1)
@@ -109,20 +107,22 @@ class gameGrid():
 
 		return
 
-	def test(self):
-
-		# for row in range(self.rows):
-		# 	for col in range(self._cols):
-		# 		print("(row, col): ({} {})".format(row, col))
-		# 		print(self.grid[row][col].getNeighbs())
-
-		reached = self.search(self.grid[0][0])
-
-		
-
-		for bubble in reached:
-			print('(row,col): ({},{})'.format(bubble.row, bubble.col))
-
+	# def test(self):
+	# 	# for row in range(self.rows):
+	# 	# 	for col in range(self._cols):
+	# 	# 		print("(row, col): ({} {})".format(row, col))
+	# 	# 		print(self.grid[row][col].getNeighbs())
+	# 	reached = self.search(self.grid[0][0])
+	# 	for bubble in reached:
+	# 		print('(row,col): ({},{})'.format(bubble.row, bubble.col))
+	# 	return
+	def popCluster(self,bulletGridPos):
+		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
+		for gridBubble in reached:
+			print('(row,col): ({},{})'.format(gridBubble.row, gridBubble.col))
+		if len(reached)>=3:
+			for gridBubble in reached:
+				gridBubble.popSelf()
 		return
 
 	def search(self, bubble, reached = None):

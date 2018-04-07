@@ -43,6 +43,11 @@ class gridBubble(bubble):
 			if neighb: alive.append(neighb)
 
 		return alive
+	#MIGHT CAUSE NAMESPACE ISSUES
+	def popSelf(self):
+		self.exists = False
+		self.color = BLACK
+
 
 class bullet(bubble):
 	def __init__(self,color,pos,angle):
@@ -76,4 +81,5 @@ class bullet(bubble):
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
 							self.out_of_bounds=True
+							return (i,j)
 	#TODO: implement a function that takes postions and snaps it onto the grid.
