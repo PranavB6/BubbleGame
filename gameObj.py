@@ -14,6 +14,7 @@ class gameGrid():
 		self.rows = GRID_ROWS
 		self._cols = GRID_COLS
 		self.grid = [[0 for x in range(self._cols)] for y in range(self.rows)]
+		self.offset = 0
 		for i in range(self.rows):
 			for j in range(self._cols):
 				if i == 5 and j == 5:
@@ -27,13 +28,6 @@ class gameGrid():
 		#self.graph = self.makeGraph()
 		self.initNeighbGrid()
 
-		tmp1 = input()
-		print('Searching...')
-		start = time.time()
-		tmp = [[self.test(self.grid[y][x]) for x in range(self._cols)] for y in range(self.rows)]
-		end = time.time()
-		print('Done')
-		print('Time = {}'.format(end-start))
 
 	def draw(self):
 		for i in range(self.rows):
@@ -156,7 +150,6 @@ class gameGrid():
 					self.search(new_bubble, reached)	
 
 		return reached
-
 
 
 def drawBackground():
