@@ -97,7 +97,6 @@ class Shooter():
 		self.loaded.draw()
 		if self.fired:
 			if self.fired.out_of_bounds:
-				print("HHHHHH")
 				self.fired = None
 		#Updates after checking if out of bounds to prevent drawing a bullet when it
 		#doesnt exist.
