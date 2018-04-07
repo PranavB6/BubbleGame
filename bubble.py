@@ -34,6 +34,48 @@ class gridBubble(bubble):
 		y = BUBBLE_RADIUS + self.row*BUBBLE_RADIUS*2
 		self.pos = (x,y)
 
+	def initNeighb(self,grid):
+
+		if self.col > 0:
+			if grid.grid[self.row][self.col-1].exists:
+				self.L = (self.row, self.col - 1)
+
+		if self.col < (grid._cols - 1):
+			if grid.grid[self.row][self.col+1].exists:
+				self.R = (self.row,self.col + 1)
+
+		if self.row % 2 != 0:
+			if self.row > 0:
+				if grid.grid[self.row -1][self.col].exists:
+					self.UR = (self.row - 1,self.col)
+				if self.col > 0:
+					if grid.grid[self.row-1][self.col-1].exists:
+						self.UL = (self.row - 1,self.col - 1)
+
+			if self.row < (grid.rows - 1):
+				if grid.grid[self.row+1][self.col].exists:
+					self.DR = (self.row + 1, self.col)
+				if self.col > 0:
+					if grid.grid[self.row+1][self.col-1].exists:
+						self.DL = (self.row + 1,self.col - 1)		
+
+		if self.row % 2 == 0:
+			if self.row > 0:
+				if grid.grid[self.row-1][self.col].exists:
+					self.UL = (self.row - 1,self.col)
+				if self.col < (grid._cols - 1):
+					if grid.grid[self.row -1][self.col + 1].exists:
+						self.UR = (self.row - 1,self.col + 1)
+
+			if self.row < (grid.rows - 1):
+				if grid.grid[self.row+1][self.col].exists:
+					self.DL = (self.row + 1,self.col)
+				if self.col < (grid._cols - 1):
+					if grid.grid[self.row+1][self.col+1].exists:
+						self.DR = (self.row + 1, self.col + 1)
+
+
+
 	def getNeighbs(self):
 
 		neighbs = [self.L, self.R, self.UL, self.UR, self.DL, self.DR]
@@ -44,6 +86,7 @@ class gridBubble(bubble):
 
 		return alive
 	#MIGHT CAUSE NAMESPACE ISSUES
+
 	def popSelf(self):
 		self.exists = False
 		self.color = BLACK
@@ -77,9 +120,9 @@ class bullet(bubble):
 						# print("PASS 1")
 						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS<self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS:
 							# print("HIT")
-							print(str(i)+","+str(j))
+							#print(str(i)+","+str(j))
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
 							self.out_of_bounds=True
-							return (i,j)
+							return i,j
 	#TODO: implement a function that takes postions and snaps it onto the grid.
