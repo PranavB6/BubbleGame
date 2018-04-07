@@ -3,6 +3,7 @@ import pygame as pg
 from math import *
 from constants import *
 from bubble import *
+import time
 
 class game():
 	def __init__(self):
@@ -25,7 +26,14 @@ class gameGrid():
 		self.appendBottom()
 		#self.graph = self.makeGraph()
 		self.initNeighbGrid()
-		#self.test()
+
+		tmp1 = input()
+		print('Searching...')
+		start = time.time()
+		tmp = [[self.test(self.grid[y][x]) for x in range(self._cols)] for y in range(self.rows)]
+		end = time.time()
+		print('Done')
+		print('Time = {}'.format(end-start))
 
 	def draw(self):
 		for i in range(self.rows):
@@ -48,8 +56,8 @@ class gameGrid():
 							
 							if bulletGridPos:
 
-								print('-------------------------------')
-								print('Bullet Grid Position:', bulletGridPos[0], bulletGridPos[1] )
+								# print('-------------------------------')
+								# print('Bullet Grid Position:', bulletGridPos[0], bulletGridPos[1] )
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
 
@@ -82,16 +90,36 @@ class gameGrid():
 
 		return
 
-	def test(self):
+	def test(self, bubble, reached = None):
 		# for row in range(self.rows):
 		# 	for col in range(self._cols):
 		# 		print("(row, col): ({} {})".format(row, col))
 		# 		print(self.grid[row][col].getNeighbs())
-		reached = self.search(self.grid[0][0])
-		for bubble in reached:
-			pass
-			#print('(row,col): ({},{})'.format(bubble.row, bubble.col))
-		return
+		# reached = self.test(self.grid[0][0])
+		# for bubble in reached:
+		# 	pass
+		# 	#print('(row,col): ({},{})'.format(bubble.row, bubble.col))
+		# return
+
+
+		#print(bubble)
+		
+
+		if reached == None: 
+			reached = []
+
+			# print('Comrads:', end = ' ')
+		if bubble in reached: return
+
+		reached.append(bubble)
+
+		for neighb in bubble.getNeighbs():
+			new_bubble = self.grid[neighb[0]][neighb[1]]
+
+			if new_bubble.exists:
+				if new_bubble.color == bubble.color:
+					# print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
+					self.test(new_bubble, reached)
 
 	def popCluster(self,bulletGridPos):
 		
@@ -114,7 +142,7 @@ class gameGrid():
 		if reached == None: 
 			reached = []
 
-			print('Comrads:', end = ' ')
+			# print('Comrads:', end = ' ')
 		if bubble in reached: return
 
 		reached.append(bubble)
@@ -124,10 +152,8 @@ class gameGrid():
 
 			if new_bubble.exists:
 				if new_bubble.color == bubble.color:
-					print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
-					self.search(new_bubble, reached)
-
-		
+					# print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
+					self.search(new_bubble, reached)	
 
 		return reached
 
