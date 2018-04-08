@@ -10,26 +10,28 @@ class game():
 		self.over = False
 
 class gameGrid():
+
+
 	def __init__(self):
 		self.rows = GRID_ROWS
 		self._cols = GRID_COLS
 		self.grid = [[0 for x in range(self._cols)] for y in range(self.rows)]
-		self.offset = 0
+		self.even_offset = True
 		for i in range(self.rows):
 			for j in range(self._cols):
 				if i == 5 and j == 5:
-					self.grid[i][j] = gridBubble(BLACK,i,j,False)
+					self.grid[i][j] = gridBubble(BLACK,i,j,False, self)
 				elif i % 2:
-					self.grid[i][j] = gridBubble(RED,i,j,True)
+					self.grid[i][j] = gridBubble(RED,i,j,True, self)
 				else:
-					self.grid[i][j] = gridBubble(BLUE,i,j,True)
+					self.grid[i][j] = gridBubble(BLUE,i,j,True, self)
 				self.grid[i][j].draw()
 		self.appendBottom()
 		#self.graph = self.makeGraph()
 		self.initNeighbGrid()
 
 		self.appendTop()
-		self.test()
+		# self.test()
 
 	def draw(self):
 		for i in range(self.rows):
@@ -75,7 +77,7 @@ class gameGrid():
 	def appendBottom(self):
 		row = []
 		for j in range(self._cols):
-			row.append(gridBubble(BLACK,self.rows,j,False))
+			row.append(gridBubble(BLACK,self.rows,j,False, self))
 		self.grid.append(row)	
 		self.rows += 1
 
@@ -87,6 +89,7 @@ class gameGrid():
 		return
 
 	def test(self):
+		global EvenOffset
 		for row in range(self.rows):
 			for col in range(self._cols):
 				print("(row, col): ({} {}) Color: {}".format(row, col, self.grid[row][col].color))
@@ -104,9 +107,9 @@ class gameGrid():
 
 	def popCluster(self,bulletGridPos):
 		
-		print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
+		# print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
-		print()
+		# print()
 
 		if len(reached)>=3:
 			time.sleep(0.1)
@@ -140,15 +143,17 @@ class gameGrid():
 
 	def appendTop(self):
 
+		self.even_offset = not self.even_offset
+		
 		for row in range(self.rows):
 			for col in range(self._cols):
 				# print('(row, col) = ({}, {})'.format(row, col))
 				self.grid[row][col].row += 1
-				self.grid[row][col].calcPos()
+				self.grid[row][col].calcPos(self)
 
 		self.rows += 1
 
-		new_bubbles = [gridBubble(YELLOW,0,col,True) for col in range(self._cols) ]
+		new_bubbles = [gridBubble(YELLOW,0,col,True, self) for col in range(self._cols) ]
 
 		self.grid.insert(0, new_bubbles)
 

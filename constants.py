@@ -1,5 +1,6 @@
 from math import *
 import pygame as pg
+
 DISP_W = 900
 DISP_H = 700
 BOTTOM_CENTER = (450,700)
@@ -36,8 +37,8 @@ WALL_RECT_R = pg.Rect(WALL_BOUND_R,0,WALL_WIDTH,DISP_H)
 ARROW_BASE = (int(DISP_W/2),DISP_H)
 ARROW_LENGTH = 80
 
-ANGLE_MAX = 180
-ANGLE_MIN = 0
+ANGLE_MAX = 180 - 15
+ANGLE_MIN = 0 + 15
 
 #Moving Bubble Constants
 BUBBLE_VEL = 10
@@ -48,3 +49,8 @@ PREBULLET_POS_Y = ARROW_BASE[1]-BUBBLE_RADIUS
 GRID_COLS = 20
 #rows const?
 GRID_ROWS = 10
+
+
+def init():
+	global EvenOffset
+	EvenOffset = True

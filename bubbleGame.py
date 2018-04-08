@@ -34,6 +34,7 @@ gun.putInBox()
 
 
 def main():
+	init()
 	#print('program start')
 	gameInstance = game()
 	mouse_angle = pi/2
@@ -49,9 +50,12 @@ def main():
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
+
 				
 			if event.type == pg.MOUSEBUTTONDOWN:
 				#TODO: Implement singleton
+				gamegrid.appendTop()
+
 				if gameBullet:
 					pass
 				else:
