@@ -36,6 +36,13 @@ class gridBubble(bubble):
 
 	def initNeighb(self,grid):
 
+		self.L = None
+		self.R = None
+		self.UL = None
+		self.UR = None
+		self.DL = None
+		self.DR = None 
+
 		if self.col > 0:
 			if grid.grid[self.row][self.col-1].exists:
 				self.L = (self.row, self.col - 1)

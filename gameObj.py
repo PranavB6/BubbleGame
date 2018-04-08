@@ -28,6 +28,8 @@ class gameGrid():
 		#self.graph = self.makeGraph()
 		self.initNeighbGrid()
 
+		self.appendTop()
+		self.test()
 
 	def draw(self):
 		for i in range(self.rows):
@@ -84,11 +86,11 @@ class gameGrid():
 
 		return
 
-	def test(self, bubble, reached = None):
-		# for row in range(self.rows):
-		# 	for col in range(self._cols):
-		# 		print("(row, col): ({} {})".format(row, col))
-		# 		print(self.grid[row][col].getNeighbs())
+	def test(self):
+		for row in range(self.rows):
+			for col in range(self._cols):
+				print("(row, col): ({} {}) Color: {}".format(row, col, self.grid[row][col].color))
+				print(self.grid[row][col].getNeighbs())
 		# reached = self.test(self.grid[0][0])
 		# for bubble in reached:
 		# 	pass
@@ -96,24 +98,9 @@ class gameGrid():
 		# return
 
 
-		#print(bubble)
 		
 
-		if reached == None: 
-			reached = []
-
-			# print('Comrads:', end = ' ')
-		if bubble in reached: return
-
-		reached.append(bubble)
-
-		for neighb in bubble.getNeighbs():
-			new_bubble = self.grid[neighb[0]][neighb[1]]
-
-			if new_bubble.exists:
-				if new_bubble.color == bubble.color:
-					# print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
-					self.test(new_bubble, reached)
+		return
 
 	def popCluster(self,bulletGridPos):
 		
@@ -150,6 +137,27 @@ class gameGrid():
 					self.search(new_bubble, reached)	
 
 		return reached
+
+	def appendTop(self):
+
+		for row in range(self.rows):
+			for col in range(self._cols):
+				# print('(row, col) = ({}, {})'.format(row, col))
+				self.grid[row][col].row += 1
+				self.grid[row][col].calcPos()
+
+		self.rows += 1
+
+		new_bubbles = [gridBubble(YELLOW,0,col,True) for col in range(self._cols) ]
+
+		self.grid.insert(0, new_bubbles)
+
+		for row in range(self.rows):
+			for col in range(self._cols):
+				self.grid[row][col].initNeighb(self)
+
+		return
+
 
 
 def drawBackground():
