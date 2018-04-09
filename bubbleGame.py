@@ -22,7 +22,7 @@ pg.display.set_caption(CAPTION)
 # Game specific clock
 clock = pg.time.Clock()
 
-font = pg.font.SysFont("helvetica", 32)
+font = pg.font.SysFont("helvetica", 30)
 
 #------------------------------------------------------------
 #make grid object(?)
@@ -73,6 +73,8 @@ def main():
 		gun.draw_bullet()
 		# preBullet.draw()
 		gamegrid.draw()
+
+		gameInstance.checkGameOver(gamegrid)
 		pg.display.update()
 		clock.tick(60)
 	return

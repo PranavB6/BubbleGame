@@ -9,8 +9,12 @@ class game():
 	def __init__(self):
 		self.over = False
 		self.score = 0
+	#Check game over if grid rows exceed a given amount
+	def checkGameOver(self,grid):
+		if grid.rows >= GAMEOVER_ROWS:
+			print("GAME OVER")
+			self.over = True
 class gameGrid():
-
 
 	def __init__(self):
 		self.rows = GRID_ROWS
@@ -99,10 +103,6 @@ class gameGrid():
 		# 	pass
 		# 	#print('(row,col): ({},{})'.format(bubble.row, bubble.col))
 		# return
-
-
-		
-
 		return
 
 	def popCluster(self,bulletGridPos,game):
@@ -201,17 +201,16 @@ class gameGrid():
 				for neighb in bubble.getNeighbs():
 					rooted = self.rootSearch(self.grid[neighb[0]][neighb[1]], rooted, reached)
 
-
-
-
 		return rooted
 
 
 
 def drawBackground():
 	display.fill(BG_COLOUR)
+	pg.draw.rect(display,DARK_GRAY,WALL_RECT_FLOOR)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
+
 
 def drawArrow(arrow_angle):
 	#print(arrow_angle)
