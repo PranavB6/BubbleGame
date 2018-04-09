@@ -13,6 +13,7 @@ pg.display.set_caption(CAPTION)
 
 # colours
 BLACK = (0, 0, 0 )
+MIDDLE_GRAY = (80,80,80)
 LIGHT_GRAY = (122, 122, 122)
 DARK_GRAY = (60,60,60)
 WHITE = (255, 255, 255)

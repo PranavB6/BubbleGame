@@ -15,7 +15,6 @@ class game():
 			print("GAME OVER")
 			self.over = True
 class gameGrid():
-
 	def __init__(self):
 		self.rows = GRID_ROWS
 		self._cols = GRID_COLS
@@ -23,20 +22,14 @@ class gameGrid():
 		self.even_offset = True
 		for i in range(self.rows):
 			for j in range(self._cols):
-				if i == 5 and j == 5:
-					self.grid[i][j] = gridBubble(BLACK,i,j,False, self)
-				elif i % 2:
-					self.grid[i][j] = gridBubble(RED,i,j,True, self)
-				else:
-					self.grid[i][j] = gridBubble(BLUE,i,j,True, self)
+				if j%2 == 0:
+					randColor = random.choice(BALL_COLOURS)
+
+				self.grid[i][j] = gridBubble(randColor,i,j,True, self)
 				self.grid[i][j].draw()
 		self.appendBottom()
-		#self.graph = self.makeGraph()
 		self.initNeighbGrid()
-
 		self.appendTop()
-		# self.test()
-
 	def draw(self):
 		for i in range(self.rows):
 			for j in range(self._cols):
@@ -207,7 +200,7 @@ class gameGrid():
 
 def drawBackground():
 	display.fill(BG_COLOUR)
-	pg.draw.rect(display,DARK_GRAY,WALL_RECT_FLOOR)
+	pg.draw.rect(display,MIDDLE_GRAY,WALL_RECT_FLOOR)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
 	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
 
