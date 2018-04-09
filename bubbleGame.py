@@ -54,7 +54,7 @@ def main():
 				
 			if event.type == pg.MOUSEBUTTONDOWN:
 				#TODO: Implement singleton
-				gamegrid.appendTop()
+				# gamegrid.appendTop()
 
 				if gameBullet:
 					pass

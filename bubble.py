@@ -59,7 +59,7 @@ class gridBubble(bubble):
 			if grid.grid[self.row][self.col+1].exists:
 				self.R = (self.row,self.col + 1)
 
-		if even_offset: 
+		if not even_offset: 
 
 			if self.row % 2 != 0:
 				if self.row > 0:

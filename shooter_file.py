@@ -1,5 +1,5 @@
 from constants import *
-import math
+import math, random
 from bubble import *
 import pygame as pg
 pg.init()
@@ -109,7 +109,7 @@ class Shooter():
 		rads = math.radians(self.angle)
 		if self.fired is None: 
 			self.fired = bullet( self.loaded.color, self.pos, rads )
-			self.loaded = bubble(WHITE,self.pos)
+			self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
 		return
 '''
 def drawArrow(arrow_angle):
