@@ -107,18 +107,36 @@ class gameGrid():
 
 	def popCluster(self,bulletGridPos,game):
 		
+		pop = False
+		to_pop = []
+		to_pop_n = 0
+
 		# print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 		# print()
 
-		if len(reached)>=3:
-			#TODO, ADD ANIMATION
-			time.sleep(0.1)
-			for gridBubble in reached:
-				gridBubble.popSelf()
-				game.score += 1
-			print(game.score)
+		rooted = self.rootSearch(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 
+		print('{} rooted: {}, exists: {}'.format(bulletGridPos, rooted, self.grid[bulletGridPos[0]][bulletGridPos[1]].exists) )
+
+		if len(reached)>=3: pop = True
+
+		if pop:
+			to_pop_n = len(reached)
+			for bubble in reached: to_pop.append(bubble)
+			
+			while to_pop_n:
+				to_pop_n -= 1
+				bubble = to_pop.pop()
+				bubble.popSelf()
+				bubble.updateNeighbs(self)
+
+				for neighb in bubble.getNeighbs():
+					rooted = self.rootSearch(self.grid[neighb[0]][neighb[1]]) 
+					if not rooted:
+						print('Not rooted:', neighb)
+						to_pop.append(self.grid[neighb[0]][neighb[1]])
+						to_pop_n += 1
 		return
 
 	def search(self, bubble, reached = None):
@@ -165,6 +183,25 @@ class gameGrid():
 				self.grid[row][col].initNeighb(self)
 
 		return
+
+	def rootSearch(self, bubble, rooted = False, reached = None):
+
+		if reached == None: reached = []
+
+		if bubble not in reached:
+			reached.append(bubble)
+
+			if bubble.row == 0: 
+				rooted = True 
+
+			else:
+				for neighb in bubble.getNeighbs():
+					rooted = self.rootSearch(self.grid[neighb[0]][neighb[1]], rooted, reached)
+
+
+
+
+		return rooted
 
 
 
