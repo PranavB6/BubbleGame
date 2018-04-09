@@ -59,69 +59,37 @@ class gridBubble(bubble):
 			if grid.grid[self.row][self.col+1].exists:
 				self.R = (self.row,self.col + 1)
 
-		if even_offset: 
+	
+		if self.row % 2 != even_offset:
+			if self.row > 0:
+				if grid.grid[self.row -1][self.col].exists:
+					self.UR = (self.row - 1,self.col)
+				if self.col > 0:
+					if grid.grid[self.row-1][self.col-1].exists:
+						self.UL = (self.row - 1,self.col - 1)
 
-			if self.row % 2 != 0:
-				if self.row > 0:
-					if grid.grid[self.row -1][self.col].exists:
-						self.UR = (self.row - 1,self.col)
-					if self.col > 0:
-						if grid.grid[self.row-1][self.col-1].exists:
-							self.UL = (self.row - 1,self.col - 1)
+			if self.row < (grid.rows - 1):
+				if grid.grid[self.row+1][self.col].exists:
+					self.DR = (self.row + 1, self.col)
+				if self.col > 0:
+					if grid.grid[self.row+1][self.col-1].exists:
+						self.DL = (self.row + 1,self.col - 1)		
 
-				if self.row < (grid.rows - 1):
-					if grid.grid[self.row+1][self.col].exists:
-						self.DR = (self.row + 1, self.col)
-					if self.col > 0:
-						if grid.grid[self.row+1][self.col-1].exists:
-							self.DL = (self.row + 1,self.col - 1)		
+		if self.row % 2 == even_offset:
+			if self.row > 0:
+				if grid.grid[self.row-1][self.col].exists:
+					self.UL = (self.row - 1,self.col)
+				if self.col < (grid._cols - 1):
+					if grid.grid[self.row -1][self.col + 1].exists:
+						self.UR = (self.row - 1,self.col + 1)
 
-			if self.row % 2 == 0:
-				if self.row > 0:
-					if grid.grid[self.row-1][self.col].exists:
-						self.UL = (self.row - 1,self.col)
-					if self.col < (grid._cols - 1):
-						if grid.grid[self.row -1][self.col + 1].exists:
-							self.UR = (self.row - 1,self.col + 1)
+			if self.row < (grid.rows - 1):
+				if grid.grid[self.row+1][self.col].exists:
+					self.DL = (self.row + 1,self.col)
+				if self.col < (grid._cols - 1):
+					if grid.grid[self.row+1][self.col+1].exists:
+						self.DR = (self.row + 1, self.col + 1)
 
-				if self.row < (grid.rows - 1):
-					if grid.grid[self.row+1][self.col].exists:
-						self.DL = (self.row + 1,self.col)
-					if self.col < (grid._cols - 1):
-						if grid.grid[self.row+1][self.col+1].exists:
-							self.DR = (self.row + 1, self.col + 1)
-
-		else:
-
-			if self.row % 2 == 0:
-				if self.row > 0:
-					if grid.grid[self.row -1][self.col].exists:
-						self.UR = (self.row - 1,self.col)
-					if self.col > 0:
-						if grid.grid[self.row-1][self.col-1].exists:
-							self.UL = (self.row - 1,self.col - 1)
-
-				if self.row < (grid.rows - 1):
-					if grid.grid[self.row+1][self.col].exists:
-						self.DR = (self.row + 1, self.col)
-					if self.col > 0:
-						if grid.grid[self.row+1][self.col-1].exists:
-							self.DL = (self.row + 1,self.col - 1)		
-
-			if self.row % 2 != 0:
-				if self.row > 0:
-					if grid.grid[self.row-1][self.col].exists:
-						self.UL = (self.row - 1,self.col)
-					if self.col < (grid._cols - 1):
-						if grid.grid[self.row -1][self.col + 1].exists:
-							self.UR = (self.row - 1,self.col + 1)
-
-				if self.row < (grid.rows - 1):
-					if grid.grid[self.row+1][self.col].exists:
-						self.DL = (self.row + 1,self.col)
-					if self.col < (grid._cols - 1):
-						if grid.grid[self.row+1][self.col+1].exists:
-							self.DR = (self.row + 1, self.col + 1)
 
 
 
