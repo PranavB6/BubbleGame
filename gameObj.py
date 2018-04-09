@@ -124,11 +124,14 @@ class gameGrid():
 		if pop:
 			to_pop_n = len(reached)
 			for bubble in reached: to_pop.append(bubble)
-			
+
 			while to_pop_n:
 				to_pop_n -= 1
 				bubble = to_pop.pop()
-				bubble.popSelf()
+				if bubble.exists:
+					bubble.popSelf()
+					game.score += 1
+					print(game.score)
 				bubble.updateNeighbs(self)
 
 				for neighb in bubble.getNeighbs():

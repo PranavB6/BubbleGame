@@ -22,6 +22,8 @@ pg.display.set_caption(CAPTION)
 # Game specific clock
 clock = pg.time.Clock()
 
+font = pg.font.SysFont("helvetica", 32)
+
 #------------------------------------------------------------
 #make grid object(?)
 #make grid a set pattern(?)
@@ -37,7 +39,9 @@ def main():
 	gamegrid = gameGrid()
 	mouse_pos=(0,0)
 	while not gameInstance.over:
+		text = font.render(str(gameInstance.score),True,(122,122,122))
 		drawBackground()
+		display.blit(text,(WALL_BOUND_R-(text.get_width()/2)+WALL_WIDTH/2,120))
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
@@ -45,8 +49,6 @@ def main():
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
-
-				
 			if event.type == pg.MOUSEBUTTONDOWN:
 				#TODO: Implement singleton
 				# gamegrid.appendTop()
