@@ -21,11 +21,7 @@ pg.display.set_caption(CAPTION)
 
 # Game specific clock
 clock = pg.time.Clock()
-#Global
-id_Count = 0
 
-
-	#return angle
 #------------------------------------------------------------
 #make grid object(?)
 #make grid a set pattern(?)
@@ -35,7 +31,6 @@ gun.putInBox()
 
 def main():
 	init()
-	#print('program start')
 	gameInstance = game()
 	mouse_angle = pi/2
 	gameBullet = None
@@ -67,15 +62,9 @@ def main():
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
-	
-		# if gameBullet:
-		# 	gameBullet.updatePos()
-		# 	gamegrid.check(gameBullet.pos,gameBullet)
-		# 	if gameBullet.out_of_bounds:
-		# 		gameBullet = None
 		
 		if gun.fired:
-			gamegrid.check(gun.fired.pos,gun.fired)
+			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
 		gamegrid.checkGameOver(gameInstance)
 		gun.rotate(mouse_pos)
@@ -85,9 +74,6 @@ def main():
 		pg.display.update()
 		clock.tick(60)
 	return
-
-	# pg.draw.circle(display,self.color,
-	# 		(int(self.pos[0]),int(self.pos[1])),self.diameter)
 
 if __name__ == '__main__':
 	main()

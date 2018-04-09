@@ -8,7 +8,7 @@ import time
 class game():
 	def __init__(self):
 		self.over = False
-
+		self.score = 0
 class gameGrid():
 
 
@@ -38,7 +38,7 @@ class gameGrid():
 			for j in range(self._cols):
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
-	def check(self,bullet_pos,bullet):
+	def check(self,bullet_pos,bullet,game):
 		for i in range(self.rows):
 			for j in range(self._cols):
 				# print(str(i)+","+str(j))
@@ -61,7 +61,7 @@ class gameGrid():
 
 
 								#print (self.grid[bulletGridPos[0]][bulletGridPos[1]].getNeighbs())
-								self.popCluster(bulletGridPos)
+								self.popCluster(bulletGridPos,game)
 
 						else:
 							pass
@@ -105,16 +105,19 @@ class gameGrid():
 
 		return
 
-	def popCluster(self,bulletGridPos):
+	def popCluster(self,bulletGridPos,game):
 		
 		# print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 		# print()
 
 		if len(reached)>=3:
+			#TODO, ADD ANIMATION
 			time.sleep(0.1)
 			for gridBubble in reached:
 				gridBubble.popSelf()
+				game.score += 1
+			print(game.score)
 
 		return
 
