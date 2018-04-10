@@ -1,11 +1,7 @@
 Needs supercede shoulds
 
 
-Should make colors more distimct
-
 Need start and reset state
-
-Need to find collision bug
 
 Should update to sprites
 
@@ -13,15 +9,9 @@ Need popping animation/ indication
 
 Need popping delay
 
-Need to make inital balls more random
-
 NEED to implement topRow appending condition (make grid go down a row after five shots or something)
 
 Need falling animation
-
-Need more color seperation
-
-NEED a top row boundary (we need balls to hit the roof)
 
 Need win condition
 

@@ -52,8 +52,15 @@ class gameGrid():
 								return
 						else:
 							pass
-		if bullet_pos[1] < 0:
-			bullet.out_of_bounds = True
+		#UNTESTED CODE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		if bullet_pos[1]-BUBBLE_RADIUS < 0:
+			bulletGridPos = bullet.getGridPos(self)
+			if bulletGridPos:
+				self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
+				self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
+				self.popCluster(bulletGridPos,game)
+				return
+		#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		#Check if the bottom row is completely null, if not, add a null row
 		for j in range(self._cols):
 			if self.grid[self.rows-1][j].exists:
