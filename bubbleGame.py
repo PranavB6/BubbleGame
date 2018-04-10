@@ -46,7 +46,7 @@ def main():
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
 		if not gameInstance.running:
 			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))
-			
+
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
@@ -76,7 +76,6 @@ def main():
 		if gun.fired:
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
-		gamegrid.checkGameOver(gameInstance)
 		gamegrid.draw()
 		gun.rotate(mouse_pos)
 
@@ -85,9 +84,10 @@ def main():
 		gameInstance.checkGameOver(gamegrid,clock)
 
 		if gameInstance.over:
-			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_W/2) )
-			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2),DISP_W/2+30) )
-		print("SDFEEE")
+			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_H/2-30) )
+			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,WHITE)
+			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2),DISP_H/2) )
+			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2),DISP_H/2+30) )
 		pg.display.update()
 		clock.tick(60)
 	return
