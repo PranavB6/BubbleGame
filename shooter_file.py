@@ -94,15 +94,16 @@ class Shooter():
 
 
 	def draw_bullet(self):
-		self.loaded.draw()
 		if self.fired:
 			if self.fired.out_of_bounds:
 				self.fired = None
+				#KEEP THIS RETURN STATEMENT. IDK WHY BUT ITS STOPPING A BUG I THINK
+				return
 		#Updates after checking if out of bounds to prevent drawing a bullet when it
 		#doesnt exist.
 		if self.fired:
 			self.fired.updatePos()
-
+		self.loaded.draw()
 		return
 
 	def fire(self):
