@@ -17,16 +17,18 @@ class game():
 		if self.over == True:
 			return
 		if grid.rows >= GAMEOVER_ROWS:
-			for row in range(grid.rows):
-				for col in range(grid._cols):
-					if grid.grid[row][col].exists:
-						grid.grid[row][col].popSelf(grid)
+			for col in range(grid._cols):
+				if grid.grid[GAMEOVER_ROWS-1][col].exists:
+					for row in range(grid.rows):
+						for col in range(grid._cols):
+							if grid.grid[row][col].exists:
+								grid.grid[row][col].popSelf(grid)
 
-			drawBackground()
-			grid.draw()
-			pg.display.update()
-			clock.tick(60)
-			self.over = True
+					drawBackground()
+					grid.draw()
+					pg.display.update()
+					clock.tick(60)
+					self.over = True
 
 
 			
@@ -97,10 +99,6 @@ class gameGrid():
 			if self.grid[self.rows-1][j].exists:
 				self.appendBottom()
 
-	def checkGameOver(self,game):
-		if self.rows == 20:
-			game.over == True
-			#self.grid[i][j].color = WHITE
 	def appendBottom(self):
 		row = []
 		if self.rows <= 17:

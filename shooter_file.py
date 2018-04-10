@@ -60,7 +60,7 @@ class Shooter():
 		# line(Surface, color, start_pos, end_pos, width=1) -> Rect
 		end = ( (math.cos(math.radians(self.angle)) * 300) + display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * 300))
 		
-		pg.draw.line(display, WHITE, self.pos, end)
+		pg.draw.line(display, RED, self.pos, end)
 
 		return
 
@@ -72,10 +72,11 @@ class Shooter():
 		# Get a rotated version of the box to display. Note: don't keep rotating the original as that skews the image
 		rotated_box = pg.transform.rotate(self.shooter_box, self.angle)
 
+		self.draw_line()
+
 		# display the image
 		display.blit(rotated_box, rotated_box.get_rect( center = self.pos))
 
-		self.draw_line()
 
 		return
 

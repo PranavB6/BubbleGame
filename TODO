@@ -1,15 +1,23 @@
 Needs supercede shoulds
 
 
-Need start and reset state
 
 Should update to sprites
 
-Need popping animation/ indication
-
-Need popping delay
-
-Need falling animation
-
 Need win condition
 
+Need "Ammo" ball, to show what the next ball loaded into the cannon will be
+
+Need to update cannon
+
+Need to Blit score on game over
+
+Can add different game over messages based on score
+
+Need to play test
+
+Need to fix collision bug
+
+Need to center to prebullet onto cannon (after new cannon is used)
+
+Should add shaking when grid is about to call appendTop();
