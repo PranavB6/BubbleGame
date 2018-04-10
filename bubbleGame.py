@@ -28,7 +28,7 @@ gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
 def main():
-	init()
+	global Append_Countdown
 	gameInstance = game()
 	mouse_angle = pi/2
 	gameBullet = None
@@ -65,6 +65,9 @@ def main():
 		gun.draw_bullet()
 
 		gameInstance.checkGameOver(gamegrid)
+
+
+		print('Append_Countdown', Append_Countdown)
 		pg.display.update()
 		clock.tick(60)
 	return

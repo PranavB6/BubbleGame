@@ -56,6 +56,7 @@ GRID_ROWS = 10
 
 GAMEOVER_ROWS = 20
 
-def init():
-	global EvenOffset
-	EvenOffset = True
+
+APPEND_COUNTDOWN_MAX = 6
+
+Append_Countdown = APPEND_COUNTDOWN_MAX
