@@ -37,7 +37,7 @@ def main():
 	mouse_pos=(0,0)
 	scoreLabel = font.render("Score:",True,WHITE)
 	startLabel = font.render("Press Left Click To Start",True,WHITE)
-	while not gameInstance.over:
+	while True:
 		scoreNum = font.render(str(gameInstance.score),True,WHITE)
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
