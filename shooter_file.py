@@ -107,8 +107,12 @@ class Shooter():
 		return
 
 	def fire(self):
+		global Append_Countdown
+		print(Append_Countdown)
+
 		rads = math.radians(self.angle)
-		if self.fired is None: 
+		if self.fired is None:
+			Append_Countdown = Append_Countdown - 1
 			self.fired = bullet( self.loaded.color, self.pos, rads )
 			self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
 		return
