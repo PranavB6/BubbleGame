@@ -1,4 +1,5 @@
 from constants import *
+import time
 
 
 
@@ -99,9 +100,28 @@ class gridBubble(bubble):
 
 	#MIGHT CAUSE NAMESPACE ISSUES
 
-	def popSelf(self):
+	def popSelf(self, grid):
 		self.exists = False
+		bubble_color = self.color
 		self.color = BG_COLOUR
+
+		animate_lst = []
+
+		x = self.pos[0]
+		y = self.pos[1]
+		dy = 5
+		dyy = 0.5
+
+		while (y - BUBBLE_RADIUS) < DISP_H:
+			dy += dyy
+			y += dy
+			animate_lst.append(bubble(bubble_color, (int(x), int(y)) ))
+
+		animate_lst = animate_lst[::-1]
+
+		grid.animations.append(animate_lst)
+
+
 
 class bullet(bubble):
 	def __init__(self,color,pos,angle):

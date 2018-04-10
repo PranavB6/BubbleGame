@@ -11,11 +11,14 @@ class game():
 		self.score = 0
 		self.running = False
 		self.ballCounter = 0
+		
 	#Check game over if grid rows exceed a given amount
 	def checkGameOver(self,grid):
 		if grid.rows >= GAMEOVER_ROWS:
 			print("GAME OVER")
 			self.over = True
+
+			
 class gameGrid():
 	def __init__(self):
 		self.rows = GRID_ROWS
@@ -23,6 +26,8 @@ class gameGrid():
 		self.grid = [[0 for x in range(self._cols)] for y in range(self.rows)]
 		self.even_offset = True
 		colorInd = 0
+		self.animations = []
+
 		for i in range(self.rows):
 			for j in range(self._cols):
 				self.grid[i][j] = gridBubble(random.choice(BALL_COLOURS),i,j,True, self)
@@ -33,6 +38,14 @@ class gameGrid():
 			for j in range(self._cols):
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
+
+		for animation in self.animations:
+			if not animation: 
+				self.animations.remove(animation)
+				continue
+			frame = animation.pop()
+			frame.draw()
+
 	def check(self,bullet_pos,bullet,game):
 		if bullet == None or bullet.out_of_bounds:
 			return
@@ -113,7 +126,7 @@ class gameGrid():
 				to_pop_n -= 1
 				bubble = to_pop.pop()
 				if bubble.exists:
-					bubble.popSelf()
+					bubble.popSelf(self)
 					game.score += 1
 				bubble.updateNeighbs(self)
 
