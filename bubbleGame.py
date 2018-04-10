@@ -34,14 +34,27 @@ def main():
 	gameBullet = None
 	gamegrid = gameGrid()
 	mouse_pos=(0,0)
+	gameInstance.started = False
+	gameInstance.over = False
+	scoreLabel = font.render("Score:",True,WHITE)
 	while not gameInstance.over:
-		text = font.render(str(gameInstance.score),True,(255,255,255))
+		scoreNum = font.render(str(gameInstance.score),True,WHITE)
 		drawBackground()
-		display.blit(text,(WALL_BOUND_R-(text.get_width()/2)+WALL_WIDTH/2,120))
+		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
+		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
+
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
 				quit()
+			#Ctrl+C to quit
+			if event.type == pg.KEYDOWN:
+				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
+					pg.quit()
+					quit()
+			#Lock game specific controls if game is over
+			if gameInstance.over:
+				break
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
@@ -50,11 +63,7 @@ def main():
 					pass
 				else:
 					gun.fire()
-			#Ctrl+C to quit
-			if event.type == pg.KEYDOWN:
-				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
-					pg.quit()
-					quit()
+
 		if gun.fired:
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
