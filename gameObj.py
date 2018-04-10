@@ -32,7 +32,7 @@ class gameGrid():
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
 	def check(self,bullet_pos,bullet,game):
-		if bullet.out_of_bounds:
+		if bullet == None or bullet.out_of_bounds:
 			return
 		for i in range(self.rows):
 			for j in range(self._cols):
@@ -49,6 +49,7 @@ class gameGrid():
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
 								self.popCluster(bulletGridPos,game)
+								return
 						else:
 							pass
 		if bullet_pos[1] < 0:

@@ -136,5 +136,6 @@ class bullet(bubble):
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
 							self.out_of_bounds=True
+							self=None
 							return i,j
 	#TODO: implement a function that takes postions and snaps it onto the grid.

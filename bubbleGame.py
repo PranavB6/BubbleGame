@@ -35,7 +35,7 @@ def main():
 	gamegrid = gameGrid()
 	mouse_pos=(0,0)
 	while not gameInstance.over:
-		text = font.render(str(gameInstance.score),True,(122,122,122))
+		text = font.render(str(gameInstance.score),True,(255,255,255))
 		drawBackground()
 		display.blit(text,(WALL_BOUND_R-(text.get_width()/2)+WALL_WIDTH/2,120))
 		for event in pg.event.get():
