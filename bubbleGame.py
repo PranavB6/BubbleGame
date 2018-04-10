@@ -23,6 +23,7 @@ pg.display.set_caption(CAPTION)
 clock = pg.time.Clock()
 
 font = pg.font.SysFont("helvetica", 30)
+bigFont  = pg.font.SysFont("helvetica",60)
 
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
@@ -34,15 +35,15 @@ def main():
 	gameBullet = None
 	gamegrid = gameGrid()
 	mouse_pos=(0,0)
-	gameInstance.started = False
-	gameInstance.over = False
 	scoreLabel = font.render("Score:",True,WHITE)
+	startLabel = font.render("Press Left Click To Start",True,WHITE)
 	while not gameInstance.over:
 		scoreNum = font.render(str(gameInstance.score),True,WHITE)
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
-
+		if not gameInstance.running:
+			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
@@ -59,6 +60,7 @@ def main():
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 			if event.type == pg.MOUSEBUTTONDOWN:
+				gameInstance.running = True
 				if gameBullet:
 					pass
 				else:

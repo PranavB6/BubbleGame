@@ -9,7 +9,7 @@ class game():
 	def __init__(self):
 		self.over = False
 		self.score = 0
-		self.started = False
+		self.running = False
 	#Check game over if grid rows exceed a given amount
 	def checkGameOver(self,grid):
 		if grid.rows >= GAMEOVER_ROWS:
