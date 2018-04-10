@@ -42,8 +42,8 @@ class Shooter():
 
 		# Make a box to put shooter in
 		# Surface((width, height), flags=0, depth=0, masks=None) -> Surface
-		self.shooter_box = pg.Surface((self.shooter_w, self.shooter_h*2))
-		self.shooter_box.fill(BG_COLOUR)
+		self.shooter_box = pg.Surface((self.shooter_w, self.shooter_h*2),pg.SRCALPHA,32)
+		self.shooter_box.fill((0,0,0,0))
 
 		# Put shooter in box
 		self.shooter_box.blit(self.shooter, (0,0))

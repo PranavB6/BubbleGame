@@ -50,12 +50,9 @@ def main():
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 			if event.type == pg.MOUSEBUTTONDOWN:
-				# gamegrid.appendTop()
-
 				if gameBullet:
 					pass
 				else:
-
 					gun.fire()
 
 			#Ctrl+C to quit
