@@ -37,6 +37,8 @@ def main():
 	mouse_pos=(0,0)
 	scoreLabel = font.render("Score:",True,WHITE)
 	startLabel = font.render("Press Left Click To Start",True,WHITE)
+	endLabel = font.render("Loser Is You",True,WHITE)
+	endPrompt = font.render("Press R to restart",True,WHITE)
 	while True:
 		scoreNum = font.render(str(gameInstance.score),True,WHITE)
 		drawBackground()
@@ -44,6 +46,8 @@ def main():
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
 		if not gameInstance.running:
 			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))
+
+
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
@@ -53,6 +57,10 @@ def main():
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
+				#r or R to restart
+				if event.key == pg.K_r or pg.K_r and pg.key.get_mods() & pg.KMOD_SHIFT:
+					if gameInstance.over:
+						return
 			#Lock game specific controls if game is over
 			if gameInstance.over:
 				break
@@ -75,12 +83,17 @@ def main():
 
 		gun.draw_bullet()
 
-		gameInstance.checkGameOver(gamegrid)
+		gameInstance.checkGameOver(gamegrid,clock)
 
+		if gameInstance.over:
+			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_W/2) )
+			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2),DISP_W/2+30) )
 
 		pg.display.update()
 		clock.tick(60)
 	return
 
 if __name__ == '__main__':
-	main()
+	#Call main in True loop to allow it to reset it self if. main returns when r is pressed.
+	while True:
+		main()
