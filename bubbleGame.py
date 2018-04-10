@@ -46,8 +46,7 @@ def main():
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
 		if not gameInstance.running:
 			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))
-
-
+			
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
