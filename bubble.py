@@ -12,17 +12,12 @@ class bubble():
 			(int(self.pos[0]),int(self.pos[1])),self.radius)
 
 class gridBubble(bubble):
-
 	def __init__(self,color,row,col,exists, grid):
 		self.row = row
 		self.col = col
 		self.exists = exists
 		self.calcPos(grid)
 		bubble.__init__(self,color,self.pos)
-
-		# self.id = id_Count
-		# id_Count += 1
-
 		self.L = None
 		self.R = None
 		self.UL = None
@@ -32,16 +27,12 @@ class gridBubble(bubble):
 
 	def calcPos(self, grid):
 		x = (self.col * ((ROOM_WIDTH-BUBBLE_RADIUS) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_RADIUS
-
 		if (self.row % 2 == grid.even_offset):
 			x+=BUBBLE_RADIUS
-
 		y = BUBBLE_RADIUS + self.row*BUBBLE_RADIUS*2
 		self.pos = (x,y)
 
 	def initNeighb(self,grid):
-		# global EvenOffset
-
 		self.L = None
 		self.R = None
 		self.UL = None

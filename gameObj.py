@@ -38,7 +38,6 @@ class gameGrid():
 	def check(self,bullet_pos,bullet,game):
 		for i in range(self.rows):
 			for j in range(self._cols):
-				# print(str(i)+","+str(j))
 				gridElement = self.grid[i][j]
 				if gridElement:
 					if gridElement.exists:
@@ -48,20 +47,14 @@ class gameGrid():
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 							##BULLET HITS GRID##
 							bulletGridPos = bullet.getGridPos(self)
-							
 							if bulletGridPos:
-
-								# print('-------------------------------')
-								# print('Bullet Grid Position:', bulletGridPos[0], bulletGridPos[1] )
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
-
-
-								#print (self.grid[bulletGridPos[0]][bulletGridPos[1]].getNeighbs())
 								self.popCluster(bulletGridPos,game)
-
 						else:
 							pass
+		if bullet_pos[1] < 0:
+			bullet.out_of_bounds = True
 		#Check if the bottom row is completely null, if not, add a null row
 		for j in range(self._cols):
 			if self.grid[self.rows-1][j].exists:
