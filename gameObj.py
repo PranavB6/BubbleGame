@@ -32,6 +32,8 @@ class gameGrid():
 				if self.grid[i][j]:
 					self.grid[i][j].draw()
 	def check(self,bullet_pos,bullet,game):
+		if bullet.out_of_bounds:
+			return
 		for i in range(self.rows):
 			for j in range(self._cols):
 				gridElement = self.grid[i][j]
