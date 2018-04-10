@@ -63,7 +63,6 @@ def main():
 						return
 			#Lock game specific controls if game is over
 			if gameInstance.over:
-				gameBullet.out_of_bounds = True
 				break
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
@@ -82,14 +81,14 @@ def main():
 		gamegrid.draw()
 		gun.rotate(mouse_pos)
 
-		gun.draw_bullet()
+		gun.draw_bullet(gameInstance)
 
 		gameInstance.checkGameOver(gamegrid,clock)
 
 		if gameInstance.over:
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_W/2) )
 			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2),DISP_W/2+30) )
-
+		print("SDFEEE")
 		pg.display.update()
 		clock.tick(60)
 	return

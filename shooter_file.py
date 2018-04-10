@@ -33,7 +33,7 @@ class Shooter():
 
 		self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
 		self.fired = None
-		self.angle = 0
+		self.angle = 90
 
 		return
 
@@ -93,9 +93,9 @@ class Shooter():
 		return max(min( degrees , ANGLE_MAX), ANGLE_MIN)
 
 
-	def draw_bullet(self):
+	def draw_bullet(self,game):
 		if self.fired:
-			if self.fired.out_of_bounds:
+			if self.fired.out_of_bounds or game.over:
 				self.fired = None
 				#KEEP THIS RETURN STATEMENT. IDK WHY BUT ITS STOPPING A BUG I THINK
 				return

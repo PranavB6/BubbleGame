@@ -26,6 +26,7 @@ class game():
 			grid.draw()
 			pg.display.update()
 			clock.tick(60)
+			self.over = True
 
 
 			
