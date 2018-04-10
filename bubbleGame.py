@@ -50,7 +50,6 @@ def main():
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 			if event.type == pg.MOUSEBUTTONDOWN:
-				#TODO: Implement singleton
 				# gamegrid.appendTop()
 
 				if gameBullet:

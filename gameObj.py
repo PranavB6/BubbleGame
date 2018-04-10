@@ -148,7 +148,6 @@ class gameGrid():
 	def appendTop(self):
 
 		self.even_offset = not self.even_offset
-		
 		for row in range(self.rows):
 			for col in range(self._cols):
 				# print('(row, col) = ({}, {})'.format(row, col))
@@ -157,7 +156,7 @@ class gameGrid():
 
 		self.rows += 1
 
-		new_bubbles = [gridBubble(YELLOW,0,col,True, self) for col in range(self._cols) ]
+		new_bubbles = [gridBubble(random.choice(BALL_COLOURS),0,col,True, self) for col in range(self._cols) ]
 
 		self.grid.insert(0, new_bubbles)
 

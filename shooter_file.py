@@ -31,7 +31,7 @@ class Shooter():
 		self.shooter_h = self.shooter_rect[3]
 
 
-		self.loaded = bubble(WHITE,self.pos)
+		self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
 		self.fired = None
 		self.angle = 0
 
