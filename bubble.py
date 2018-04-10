@@ -1,4 +1,5 @@
 from constants import *
+import pygame.gfxdraw
 import time
 
 
@@ -7,10 +8,22 @@ class bubble():
 	def __init__(self,color,pos):
 		self.radius= BUBBLE_RADIUS
 		self.color = color
+		self.prev_color = color
 		self.pos = pos
+
+		# self.initImages()
+		# self.image = self.setImage()
+
 	def draw(self):
-		pg.draw.circle(display,self.color,
-			(int(self.pos[0]),int(self.pos[1])),self.radius)
+		# circle(Surface, color, pos, radius, width=0) -> Rect
+		x, y = int(self.pos[0]), int(self.pos[1])
+
+		# filled_circle(surface, x, y, r, color) -> None
+		pg.gfxdraw.filled_circle(display, x, y, BUBBLE_RADIUS - 1, self.color)
+
+		# circle(surface, x, y, r, color) -> None
+		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, self.color)
+
 
 class gridBubble(bubble):
 	def __init__(self,color,row,col,exists, grid):

@@ -49,6 +49,7 @@ class gameGrid():
 		for i in range(self.rows):
 			for j in range(self._cols):
 				if self.grid[i][j]:
+					# print('(row, col) = {}, {})'.format(i, j))
 					self.grid[i][j].draw()
 
 		for animation in self.animations:

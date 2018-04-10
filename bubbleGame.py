@@ -88,7 +88,9 @@ def main():
 		if gameInstance.over:
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_W/2) )
 			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2),DISP_W/2+30) )
-		print("SDFEEE")
+
+
+		# test = gridBubble()
 		pg.display.update()
 		clock.tick(60)
 	return
