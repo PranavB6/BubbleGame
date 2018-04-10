@@ -17,11 +17,16 @@ class game():
 		if self.over == True:
 			return
 		if grid.rows >= GAMEOVER_ROWS:
-			print("GAME OVER")
+			for row in range(grid.rows):
+				for col in range(grid._cols):
+					if grid.grid[row][col].exists:
+						grid.grid[row][col].popSelf(grid)
 
-			for i in range(20):
-				grid.appendTop()
-			self.over = True
+			drawBackground()
+			grid.draw()
+			pg.display.update()
+			clock.tick(60)
+
 
 			
 class gameGrid():
@@ -38,6 +43,7 @@ class gameGrid():
 				self.grid[i][j] = gridBubble(random.choice(BALL_COLOURS),i,j,True, self)
 				self.grid[i][j].draw()
 		self.initNeighbGrid()
+
 	def draw(self):
 		for i in range(self.rows):
 			for j in range(self._cols):

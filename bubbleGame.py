@@ -63,6 +63,7 @@ def main():
 						return
 			#Lock game specific controls if game is over
 			if gameInstance.over:
+				gameBullet.out_of_bounds = True
 				break
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
