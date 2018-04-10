@@ -110,8 +110,7 @@ class gridBubble(bubble):
 
 	def popSelf(self):
 		self.exists = False
-		self.color = BLACK
-
+		self.color = BG_COLOUR
 
 class bullet(bubble):
 	def __init__(self,color,pos,angle):

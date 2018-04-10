@@ -74,7 +74,7 @@ class gameGrid():
 	def appendBottom(self):
 		row = []
 		for j in range(self._cols):
-			row.append(gridBubble(BLACK,self.rows,j,False, self))
+			row.append(gridBubble(BG_COLOUR,self.rows,j,False, self))
 		self.grid.append(row)	
 		self.rows += 1
 
