@@ -69,9 +69,10 @@ def main():
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
 		gamegrid.checkGameOver(gameInstance)
-		gun.rotate(mouse_pos)
 		# preBullet.draw()
 		gamegrid.draw()
+		gun.rotate(mouse_pos)
+
 		gun.draw_bullet()
 
 		gameInstance.checkGameOver(gamegrid)

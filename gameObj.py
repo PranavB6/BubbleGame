@@ -73,8 +73,12 @@ class gameGrid():
 			#self.grid[i][j].color = WHITE
 	def appendBottom(self):
 		row = []
+		if self.rows <= 17:
+			color = BG_COLOUR
+		else:
+			color = MIDDLE_GRAY
 		for j in range(self._cols):
-			row.append(gridBubble(BG_COLOUR,self.rows,j,False, self))
+			row.append(gridBubble(color,self.rows,j,False, self))
 		self.grid.append(row)	
 		self.rows += 1
 
@@ -83,19 +87,6 @@ class gameGrid():
 			for col in range(self._cols):
 				self.grid[row][col].initNeighb(self)
 
-		return
-
-	def test(self):
-		global EvenOffset
-		for row in range(self.rows):
-			for col in range(self._cols):
-				print("(row, col): ({} {}) Color: {}".format(row, col, self.grid[row][col].color))
-				print(self.grid[row][col].getNeighbs())
-		# reached = self.test(self.grid[0][0])
-		# for bubble in reached:
-		# 	pass
-		# 	#print('(row,col): ({},{})'.format(bubble.row, bubble.col))
-		# return
 		return
 
 	def popCluster(self,bulletGridPos,game):
@@ -110,8 +101,6 @@ class gameGrid():
 
 		rooted = self.rootSearch(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 
-		print('{} rooted: {}, exists: {}'.format(bulletGridPos, rooted, self.grid[bulletGridPos[0]][bulletGridPos[1]].exists) )
-
 		if len(reached)>=3: pop = True
 
 		if pop:
@@ -124,13 +113,11 @@ class gameGrid():
 				if bubble.exists:
 					bubble.popSelf()
 					game.score += 1
-					print(game.score)
 				bubble.updateNeighbs(self)
 
 				for neighb in bubble.getNeighbs():
 					rooted = self.rootSearch(self.grid[neighb[0]][neighb[1]]) 
 					if not rooted:
-						print('Not rooted:', neighb)
 						to_pop.append(self.grid[neighb[0]][neighb[1]])
 						to_pop_n += 1
 		return
