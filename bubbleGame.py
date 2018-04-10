@@ -34,7 +34,7 @@ def main():
 	mouse_angle = pi/2
 	gameBullet = None
 	gamegrid = gameGrid()
-	mouse_pos=(0,0)
+	mouse_pos=(DISP_W/2, DISP_H/2)
 	scoreLabel = font.render("Score:",True,WHITE)
 	startLabel = font.render("Press Left Click To Start",True,WHITE)
 	endLabel = font.render("Loser Is You",True,WHITE)
