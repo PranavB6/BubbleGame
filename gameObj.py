@@ -20,16 +20,12 @@ class gameGrid():
 		self._cols = GRID_COLS
 		self.grid = [[0 for x in range(self._cols)] for y in range(self.rows)]
 		self.even_offset = True
+		colorInd = 0
 		for i in range(self.rows):
 			for j in range(self._cols):
-				if j%2 == 0:
-					randColor = random.choice(BALL_COLOURS)
-
-				self.grid[i][j] = gridBubble(randColor,i,j,True, self)
+				self.grid[i][j] = gridBubble(random.choice(BALL_COLOURS),i,j,True, self)
 				self.grid[i][j].draw()
-		self.appendBottom()
 		self.initNeighbGrid()
-		self.appendTop()
 	def draw(self):
 		for i in range(self.rows):
 			for j in range(self._cols):
@@ -117,13 +113,9 @@ class gameGrid():
 
 	def search(self, bubble, reached = None):
 
-		#print(bubble)
-		
-
 		if reached == None: 
 			reached = []
 
-			# print('Comrads:', end = ' ')
 		if bubble in reached: return
 
 		reached.append(bubble)
@@ -133,9 +125,7 @@ class gameGrid():
 
 			if new_bubble.exists:
 				if new_bubble.color == bubble.color:
-					# print('({},{})'.format(new_bubble.row, new_bubble.col), end = ' ')
 					self.search(new_bubble, reached)	
-
 		return reached
 
 	def appendTop(self):
@@ -160,19 +150,14 @@ class gameGrid():
 		return
 
 	def rootSearch(self, bubble, rooted = False, reached = None):
-
 		if reached == None: reached = []
-
 		if bubble not in reached:
 			reached.append(bubble)
-
 			if bubble.row == 0: 
 				rooted = True 
-
 			else:
 				for neighb in bubble.getNeighbs():
 					rooted = self.rootSearch(self.grid[neighb[0]][neighb[1]], rooted, reached)
-
 		return rooted
 
 

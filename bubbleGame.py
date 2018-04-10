@@ -24,12 +24,8 @@ clock = pg.time.Clock()
 
 font = pg.font.SysFont("helvetica", 30)
 
-#------------------------------------------------------------
-#make grid object(?)
-#make grid a set pattern(?)
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
-
 
 def main():
 	init()
@@ -54,18 +50,15 @@ def main():
 					pass
 				else:
 					gun.fire()
-
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
-		
 		if gun.fired:
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
 		gamegrid.checkGameOver(gameInstance)
-		# preBullet.draw()
 		gamegrid.draw()
 		gun.rotate(mouse_pos)
 
