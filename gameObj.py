@@ -12,9 +12,14 @@ class game():
 		self.running = False
 		self.ballCounter = 0
 	#Check game over if grid rows exceed a given amount
-	def checkGameOver(self,grid):
+	def checkGameOver(self,grid,clock):
+		if self.over == True:
+			return
 		if grid.rows >= GAMEOVER_ROWS:
 			print("GAME OVER")
+
+			for i in range(20):
+				grid.appendTop()
 			self.over = True
 class gameGrid():
 	def __init__(self):
@@ -64,6 +69,8 @@ class gameGrid():
 				self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
 				self.popCluster(bulletGridPos,game)
 				return
+			else:
+				bullet.out_of_bounds = True
 		#Check if the bottom row is completely null, if not, add a null row
 		for j in range(self._cols):
 			if self.grid[self.rows-1][j].exists:
