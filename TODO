@@ -18,3 +18,6 @@ Need to play test
 
 Need to fix collision bug
 
+Need to center to prebullet onto cannon (after new cannon is used)
+
+Should add shaking when grid is about to call appendTop();
