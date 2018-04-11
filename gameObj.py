@@ -33,9 +33,10 @@ class cheatManager():
 		self.gamegrid = gamegrid
 		self.gun = gun 
 		self.alphabet = set(string.ascii_lowercase)
+		self.explosion = False
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['god', 'STEVEJOBS', 'lol']
+		self.cheats = ['god', 'stevejobs', 'explosion', 'LOL']
 
 		self.machines = [StateMachine() for cheat in self.cheats]
 
@@ -82,8 +83,10 @@ class cheatManager():
 
 				#-------------------------------- Put cheat functions here --------------------------#
 				if cheat == 'god': self.god_cheat()
-				if cheat == 'lol': self.lol_cheat()
-				if cheat == 'STEVEJOBS': self.saviour_cheat()
+				elif cheat == 'LOL': self.lol_cheat()
+				elif cheat == 'stevejobs': self.saviour_cheat()
+				elif cheat == 'explosion': self.explosion_cheat()
+				else: print('Bruh, this cheat don\'t have a function:', cheat )
 				#------------------------------------------------------------------------------------#
 
 			else: machine.set('begin')
@@ -105,6 +108,10 @@ class cheatManager():
 
 	def saviour_cheat(self):
 		print('I LOVE APPLE AND APPLE LOVES ME')
+
+	def explosion_cheat(self):
+		print('Activated Cheat: Explosion')
+		self.gun.explosion = True
 
 class game():
 	def __init__(self):
@@ -179,10 +186,25 @@ class gameGrid():
 							if bulletGridPos:
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
 								self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
-								self.popCluster(bulletGridPos,game)
+								
+
 								game.ballCounter += 1
 								if game.ballCounter % APPEND_COUNTDOWN == 0:
 									self.appendTop()
+
+								if bullet.explosion: 
+									for neighb in self.grid[bulletGridPos[0]][bulletGridPos[1]].getNeighbs():
+										self.popCluster(neighb, game)
+										self.grid[neighb[0]][neighb[1]].popSelf(self)
+
+									self.grid[bulletGridPos[0]][bulletGridPos[1]].popSelf(self)
+
+									self.initNeighbGrid()
+
+									bullet.explosion = False
+								else: 
+									self.popCluster(bulletGridPos,game)
+
 								return
 						else:
 							pass

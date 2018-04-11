@@ -48,9 +48,13 @@ def main():
 	startLabel = centuryGothic.render("Press Left Click To Start",True,BLACK)
 	endLabel = centuryGothic.render("Loser Is You",True,BLACK)
 	endPrompt = centuryGothic.render("Press R to restart",True,BLACK)
+
+
 	cheat_manager = cheatManager(gamegrid, gun)
 	while True:
+
 		scoreNum = centuryGothic.render(str(gameInstance.score),True,BLACK)
+
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
