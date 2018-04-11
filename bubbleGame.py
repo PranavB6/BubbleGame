@@ -11,6 +11,7 @@ from shooter_file import *
 pg.init()
 
 #grid
+pg.font.init()
 
 #create display
 display = pg.display.set_mode((DISP_W,DISP_H))
@@ -21,8 +22,8 @@ pg.display.set_caption(CAPTION)
 # Game specific clock
 clock = pg.time.Clock()
 
-font = pg.font.SysFont("helvetica", 30)
-bigFont  = pg.font.SysFont("helvetica",60)
+font = pg.font.Font("pixel.otf", 30)
+bigFont  = pg.font.Font("pixel.otf",60)
 
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
