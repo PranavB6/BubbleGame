@@ -354,3 +354,9 @@ crosshair_rect = crosshair.get_rect()
 def drawCursor(mouse_pos):
 	crosshair_rect.center = mouse_pos
 	display.blit(crosshair, crosshair_rect)
+
+# outlinePosition = [-1,0,1]
+# def giveOutline(text,position,outlineSize):
+# 	for xDisplacement in outlinePosition:
+# 		for yDisplacement in outlinePosition:
+# 			display.blit(text,(position[0]+xDisplacement*outlineSize,position[1]+yDisplacement*outlineSize))
