@@ -1,6 +1,6 @@
 from constants import *
 import pygame.gfxdraw
-import time
+import time,random
 
 
 
@@ -14,11 +14,17 @@ class bubble():
 		# self.initImages()
 		# self.image = self.setImage()
 
-	def draw(self):
+	def draw(self,game):
 
 		if self.color == BG_COLOUR: return
+
+		ballShake = [-1,0,1]
 		# circle(Surface, color, pos, radius, width=0) -> Rect
 		x, y = int(self.pos[0]), int(self.pos[1])
+		if hasattr(game, 'ballCounter'):
+			if (game.ballCounter+1) % 6 == 0 and game.ballCounter != 0:
+				x += random.choice(ballShake)
+				y += random.choice(ballShake)
 
 
 		# filled_circle(surface, x, y, r, color) -> None
@@ -150,7 +156,7 @@ class bullet(bubble):
 		self.x_vel = cos(angle) * BUBBLE_VEL
 		self.y_vel = sin(angle) * BUBBLE_VEL
 		self.out_of_bounds = False
-	def updatePos(self):
+	def updatePos(self,game):
 		if self.pos[0]-BUBBLE_RADIUS <= WALL_BOUND_L:
 			self.x_vel = self.x_vel * -1
 		elif self.pos[0]+BUBBLE_RADIUS >= WALL_BOUND_R:
@@ -160,7 +166,7 @@ class bullet(bubble):
 		x_pos += self.x_vel
 		y_pos -= self.y_vel
 		self.pos = (x_pos,y_pos)
-		self.draw()
+		self.draw(game)
 	def getGridPos(self,grid):
 		for i in range(grid.rows):	
 			for j in range(grid._cols):
