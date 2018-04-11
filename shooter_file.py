@@ -9,7 +9,7 @@ class Shooter():
 
 	def __init__(self, image = 'cannon.png', pos = display_rect.center):
 
-		# center position of the image
+		# get center position of the image
 		self.pos = pos
 		self.pos_x, self.pos_y = pos[0], pos[1]
 
@@ -18,8 +18,7 @@ class Shooter():
 
 		# Get width and height
 		self.shooter_rect = self.shooter.get_rect()
-		self.shooter_w = self.shooter_rect[2]
-		self.shooter_h = self.shooter_rect[3]
+		self.shooter_w, self.shooter_h = self.shooter_rect[2], self.shooter_rect[3]
 
 		# Scale image
 		sf = 00.20
