@@ -40,6 +40,9 @@ class bubble():
 		# circle(surface, x, y, r, color) -> None
 		pg.gfxdraw.aacircle(display, x, y, self.radius - 1, outline)
 
+		# square = pg.Surface((BUBBLE_RADIUS*2,BUBBLE_RADIUS*2), pygame.SRCALPHA, 32)
+		# square.fill((255,0,0,100))
+		# display.blit(square,(int(self.pos[0]-square.get_width()/2),int(self.pos[1]-square.get_height()/2)))
 
 class gridBubble(bubble):
 	def __init__(self,color,row,col,exists, grid):
@@ -172,6 +175,7 @@ class bullet(bubble):
 		self.pos = (x_pos,y_pos)
 		self.draw(game)
 	def getGridPos(self,grid):
+
 		for i in range(grid.rows):	
 			for j in range(grid._cols):
 
