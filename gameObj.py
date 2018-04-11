@@ -35,7 +35,7 @@ class cheatManager():
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['alongone', 'god', 'lol']
+		self.cheats = ['alongone', 'god', 'lol','STEVEJOBS']
 		self.machines = [StateMachine() for cheat in self.cheats]
 
 	def view(self, event):
@@ -83,6 +83,7 @@ class cheatManager():
 				if cheat == 'alongone': self.alongone_cheat()
 				if cheat == 'god': self.god_cheat()
 				if cheat == 'lol': self.lol_cheat()
+				if cheat == 'STEVEJOBS': self.saviour_cheat()
 				#------------------------------------------------------------------------------------#
 
 			else: machine.set('begin')
@@ -104,6 +105,9 @@ class cheatManager():
 
 	def lol_cheat(self):
 		print('lol')
+
+	def saviour_cheat(self):
+		print('I LOVE APPLE AND APPLE LOVES ME')
 
 class game():
 	def __init__(self):
