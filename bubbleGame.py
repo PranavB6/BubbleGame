@@ -32,7 +32,7 @@ pg.mixer.music.load('song1.mp3')
 
 def main():
 
-	cheat_manager = cheatManager()
+	
 
 	screenShake = [-1,0,1]
 	gameInstance = game()
@@ -44,6 +44,8 @@ def main():
 	startLabel = font.render("Press Left Click To Start",True,BLACK)
 	endLabel = font.render("Loser Is You",True,BLACK)
 	endPrompt = font.render("Press R to restart",True,BLACK)
+
+	cheat_manager = cheatManager(gamegrid, gun)
 	while True:
 		scoreNum = font.render(str(gameInstance.score),True,BLACK)
 		drawBackground()
