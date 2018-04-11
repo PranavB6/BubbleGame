@@ -30,6 +30,7 @@ gun.putInBox()
 pg.mixer.init()
 pg.mixer.music.load('song1.mp3')
 
+
 def main():
 
 	cheat_manager = cheatManager()
