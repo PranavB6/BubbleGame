@@ -200,12 +200,17 @@ class gameGrid():
 		return rooted
 
 
+# bg = pg.image.load('bg.jpg').convert()
+bg = pg.image.load('bg.png').convert()
+_, _, bg_w, bg_h = bg.get_rect()
+sf = 0.8
+bg = pg.transform.scale(bg, (int(bg_w * sf), int(bg_h * sf)))
 
 def drawBackground():
-	display.fill(BG_COLOUR)
-	pg.draw.rect(display,MIDDLE_GRAY,WALL_RECT_FLOOR)
-	pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
-	pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
+	display.blit(bg, (0,0))
+	# pg.draw.rect(display,MIDDLE_GRAY,WALL_RECT_FLOOR)
+	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
+	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
 
 
 def drawArrow(arrow_angle):

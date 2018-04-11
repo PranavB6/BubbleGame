@@ -7,7 +7,7 @@ pg.init()
 
 class Shooter():
 
-	def __init__(self, image = 'gun.png', pos = display_rect.center):
+	def __init__(self, image = 'cannon.png', pos = display_rect.center):
 
 		# center position of the image
 		self.pos = pos
@@ -22,7 +22,7 @@ class Shooter():
 		self.shooter_h = self.shooter_rect[3]
 
 		# Scale image
-		sf = 00.25
+		sf = 00.20
 		self.shooter = pg.transform.scale(self.shooter, (int(self.shooter_w * sf), int(self.shooter_h * sf)))
 
 		# Get new width and height
@@ -31,7 +31,7 @@ class Shooter():
 		self.shooter_h = self.shooter_rect[3]
 
 
-		self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
+		self.loaded = bubble(random.choice(BALL_COLOURS), self.pos)
 		self.fired = None
 		self.angle = 90
 
@@ -57,10 +57,12 @@ class Shooter():
 
 	def draw_line(self):
 
+		length = 200
+
 		# line(Surface, color, start_pos, end_pos, width=1) -> Rect
-		end = ( (math.cos(math.radians(self.angle)) * 300) + display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * 300))
+		end = ( (math.cos(math.radians(self.angle)) * length) + display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * length))
 		
-		pg.draw.line(display, RED, self.pos, end)
+		pg.draw.line(display, RED , self.pos, end, 1)
 
 		return
 

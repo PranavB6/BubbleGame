@@ -15,6 +15,8 @@ class bubble():
 		# self.image = self.setImage()
 
 	def draw(self):
+
+		if self.color == BG_COLOUR: return
 		# circle(Surface, color, pos, radius, width=0) -> Rect
 		x, y = int(self.pos[0]), int(self.pos[1])
 
