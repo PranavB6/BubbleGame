@@ -38,7 +38,7 @@ def main():
 	gameInstance = game()
 	mouse_angle = pi/2
 	gameBullet = None
-	gamegrid = gameGrid()
+	gamegrid = gameGrid(gameInstance)
 	mouse_pos=(DISP_W/2, DISP_H/2)
 	scoreLabel = font.render("Score:",True,BLACK)
 	startLabel = font.render("Press Left Click To Start",True,BLACK)
@@ -90,12 +90,12 @@ def main():
 		if gun.fired:
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
-		gamegrid.draw()
+		gamegrid.draw(gameInstance)
 		gun.rotate(mouse_pos)
 
 		gun.draw_bullet(gameInstance)
 
-		gameInstance.checkGameOver(gamegrid,clock)
+		gameInstance.checkGameOver(gamegrid,clock,game)
 
 		if not gameInstance.running:
 			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))

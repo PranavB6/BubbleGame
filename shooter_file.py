@@ -105,8 +105,8 @@ class Shooter():
 		#Updates after checking if out of bounds to prevent drawing a bullet when it
 		#doesnt exist.
 		if self.fired:
-			self.fired.updatePos()
-		self.loaded.draw()
+			self.fired.updatePos(game)
+		self.loaded.draw(game)
 		return
 
 	def fire(self):
