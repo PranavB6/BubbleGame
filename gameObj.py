@@ -3,7 +3,100 @@ import pygame as pg
 from math import *
 from constants import *
 from bubble import *
-import time
+import time, string
+
+
+class StateMachine():
+
+	def __init__(self):
+
+		self.states = ['begin', 'next_key', 'final_key', 'reset']
+		self.state = 'begin'
+		self.idx = 0
+
+	def set(self, state):
+
+		if state not in self.states: raise ValueError('{} not a valid state'.format(state))
+		else: self.state = state
+
+		# print('State set to', self.state)
+
+	def get_state(self):
+		return self.state
+
+
+
+class cheatManager():
+
+
+	def __init__(self):
+		self.alphabet = set(string.ascii_lowercase)
+
+		#----------------------------------- Put you cheat codes here --------------------------------#
+		self.cheats = ['alongone', 'god', 'lol']
+		self.machines = [StateMachine() for cheat in self.cheats]
+
+	def view(self, event):
+
+		for idx in range(len(self.cheats)):
+			self.check(event, self.cheats[idx], self.machines[idx])
+
+	def check(self, event, cheat, machine):
+
+		char = chr(event.key)
+
+		if char not in self.alphabet: return
+
+		# print('Pressed:', char)
+
+		if machine.get_state() == 'begin':
+			machine.idx = 0
+			if char == cheat[machine.idx]:
+				machine.set('next_key') 
+				machine.idx += 1
+			return
+
+		if machine.get_state() == 'next_key':
+
+			# print('char', char)
+			# print('cheat[{}] = {}'.format(machine.idx, cheat[machine.idx] ))
+			if char == cheat[machine.idx]:
+				machine.idx += 1
+
+				if machine.idx + 1 == len(cheat):
+					machine.set('final_key')
+					
+
+			else: machine.set('begin')
+				
+			return
+
+		if machine.get_state() == 'final_key':
+			if char == cheat[machine.idx]:
+
+				for machine in self.machines:
+					machine.set('begin')
+
+				#-------------------------------- Put cheat functions here --------------------------#
+				if cheat == 'alongone': self.alongone_cheat()
+				if cheat == 'god': self.god_cheat()
+				if cheat == 'lol': self.lol_cheat()
+				#------------------------------------------------------------------------------------#
+
+			else: machine.set('begin')
+
+			return
+
+	#-------------------------------------------------- Put what the cheat function do here -------------------------- #
+
+	def alongone_cheat(self):
+		print('In alongone mode')
+
+	def god_cheat(self):
+		print('god mode')
+
+	def lol_cheat(self):
+		print('lol')
 
 class game():
 	def __init__(self):
