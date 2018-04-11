@@ -35,7 +35,7 @@ class cheatManager():
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['alongone', 'god', 'lol','STEVEJOBS']
+		self.cheats = ['god', 'explosion', 'abc']
 		self.machines = [StateMachine() for cheat in self.cheats]
 
 	def view(self, event):
@@ -80,10 +80,9 @@ class cheatManager():
 					machine.set('begin')
 
 				#-------------------------------- Put cheat functions here --------------------------#
-				if cheat == 'alongone': self.alongone_cheat()
 				if cheat == 'god': self.god_cheat()
-				if cheat == 'lol': self.lol_cheat()
-				if cheat == 'STEVEJOBS': self.saviour_cheat()
+				elif cheat == 'explosion': self.explosion_cheat()
+				else: raise ValueError('Cheat function for \'{}\' not called'.format(cheat))
 				#------------------------------------------------------------------------------------#
 
 			else: machine.set('begin')
@@ -91,9 +90,6 @@ class cheatManager():
 			return
 
 	#-------------------------------------------------- Put what the cheat function do here -------------------------- #
-
-	def alongone_cheat(self):
-		print('In alongone mode')
 
 	def god_cheat(self):
 		print('god mode')
@@ -103,11 +99,10 @@ class cheatManager():
 				if self.gamegrid.grid[row][col].exists:
 					self.gamegrid.grid[row][col].color = self.gun.loaded.color
 
-	def lol_cheat(self):
-		print('lol')
+	def explosion_cheat(self):
+		print('Activated Cheat: Explosion')
+		self.gun.loaded.color = BLACK
 
-	def saviour_cheat(self):
-		print('I LOVE APPLE AND APPLE LOVES ME')
 
 class game():
 	def __init__(self):
@@ -233,6 +228,7 @@ class gameGrid():
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 		# print()
 
+
 		rooted = self.rootSearch(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 
 		if len(reached)>=3: pop = True
@@ -269,7 +265,7 @@ class gameGrid():
 			new_bubble = self.grid[neighb[0]][neighb[1]]
 
 			if new_bubble.exists:
-				if new_bubble.color == bubble.color:
+				if (new_bubble.color == bubble.color) or (bubble.color == BLACK):
 					self.search(new_bubble, reached)	
 		return reached
 
