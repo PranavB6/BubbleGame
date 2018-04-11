@@ -10,8 +10,6 @@ class bubble():
 		self.color = color
 		self.prev_color = color
 		self.pos = pos
-		# self.initImages()
-		# self.image = self.setImage()
 
 	def draw(self,game):
 
