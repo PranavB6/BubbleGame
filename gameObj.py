@@ -177,7 +177,6 @@ class gameGrid():
 				self.grid[row][col].calcPos(self)
 
 		self.rows += 1
-
 		new_bubbles = [gridBubble(random.choice(BALL_COLOURS),0,col,True, self) for col in range(self._cols) ]
 
 		self.grid.insert(0, new_bubbles)
@@ -185,6 +184,10 @@ class gameGrid():
 		for row in range(self.rows):
 			for col in range(self._cols):
 				self.grid[row][col].initNeighb(self)
+				if row > GAMEOVER_ROWS-2:
+					if self.grid[row][col].exists:
+						continue
+					self.grid[row][col].color = MIDDLE_GRAY
 
 		return
 
