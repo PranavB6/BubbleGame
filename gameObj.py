@@ -101,10 +101,12 @@ class gameGrid():
 
 	def appendBottom(self):
 		row = []
-		if self.rows <= 17:
-			color = BG_COLOUR
-		else:
-			color = MIDDLE_GRAY
+		color = BG_COLOUR
+
+		# if self.rows <= 17:
+		# 	color = BG_COLOUR
+		# else:
+		# 	color = MIDDLE_GRAY
 		for j in range(self._cols):
 			row.append(gridBubble(color,self.rows,j,False, self))
 		self.grid.append(row)	

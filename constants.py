@@ -4,7 +4,7 @@ import pygame as pg
 DISP_W = 900
 DISP_H = 700
 BOTTOM_CENTER = (450,700)
-CAPTION = 'Bubble Trouble but worse'
+CAPTION = "Like Bubble Trouble but BETTER"
 
 #create display
 display = pg.display.set_mode((DISP_W,DISP_H))
