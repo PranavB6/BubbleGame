@@ -84,7 +84,6 @@ def main():
 		gameInstance.checkGameOver(gamegrid,clock)
 
 		if gameInstance.over:
-
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2),DISP_H/2-30) )
 			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,WHITE)
 			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2),DISP_H/2) )
