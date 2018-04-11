@@ -30,9 +30,16 @@ class Shooter():
 		self.shooter_w = self.shooter_rect[2]
 		self.shooter_h = self.shooter_rect[3]
 
+		self.reload1_pos = (self.pos[0] + 6.5*BUBBLE_RADIUS, self.pos[1] - 20)
+		self.reload2_pos = (self.pos[0] + 8.5*BUBBLE_RADIUS, self.pos[1] - 20)
+		self.reload3_pos = (self.pos[0] + 10.5*BUBBLE_RADIUS, self.pos[1] - 20)
 
-		self.loaded = bubble(random.choice(BALL_COLOURS), self.pos)
 		self.fired = None
+		self.loaded = bubble(random.choice(BALL_COLOURS), self.pos)
+		self.reload1 = bubble(random.choice(BALL_COLOURS), self.reload1_pos)
+		self.reload2 = bubble(random.choice(BALL_COLOURS), self.reload2_pos)
+		self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos)
+		
 		self.angle = 90
 
 		return
@@ -106,13 +113,24 @@ class Shooter():
 		#doesnt exist.
 		if self.fired:
 			self.fired.updatePos(game)
+
 		self.loaded.draw(game)
+		self.reload1.draw(game)
+		self.reload2.draw(game)
+		self.reload3.draw(game)
+
 		return
 
 	def fire(self):
 
 		rads = math.radians(self.angle)
+
 		if self.fired is None:
 			self.fired = bullet( self.loaded.color, self.pos, rads )
-			self.loaded = bubble(random.choice(BALL_COLOURS),(self.pos))
+			self.loaded = bubble(self.reload1.color, (self.pos))
+			self.reload1 = bubble(self.reload2.color, self.reload1_pos)
+			self.reload2 = bubble(self.reload3.color, self.reload2_pos)
+			self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos)
+
+
 		return
