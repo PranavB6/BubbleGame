@@ -82,7 +82,7 @@ class cheatManager():
 					machine.set('begin')
 
 				#-------------------------------- Put cheat functions here --------------------------#
-				if cheat == 'god': self.god_cheat()
+				if   cheat == 'god': self.god_cheat()
 				elif cheat == 'LOL': self.lol_cheat()
 				elif cheat == 'stevejobs': self.saviour_cheat()
 				elif cheat == 'explosion': self.explosion_cheat()
@@ -111,7 +111,10 @@ class cheatManager():
 
 	def explosion_cheat(self):
 		print('Activated Cheat: Explosion')
+		self.gun.loaded.color = BLACK
 		self.gun.explosion = True
+
+
 
 class game():
 	def __init__(self):
