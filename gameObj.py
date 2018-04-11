@@ -29,7 +29,9 @@ class StateMachine():
 class cheatManager():
 
 
-	def __init__(self):
+	def __init__(self, gamegrid, gun):
+		self.gamegrid = gamegrid
+		self.gun = gun 
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
@@ -94,6 +96,11 @@ class cheatManager():
 
 	def god_cheat(self):
 		print('god mode')
+
+		for row in range(self.gamegrid.rows):
+			for col in range(self.gamegrid._cols):
+				if self.gamegrid.grid[row][col].exists:
+					self.gamegrid.grid[row][col].color = self.gun.loaded.color
 
 	def lol_cheat(self):
 		print('lol')
