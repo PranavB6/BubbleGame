@@ -29,6 +29,9 @@ gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
 def main():
+
+	cheat_manager = cheatManager()
+
 	screenShake = [-1,0,1]
 	gameInstance = game()
 	mouse_angle = pi/2
@@ -52,6 +55,9 @@ def main():
 				quit()
 			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
+
+				cheat_manager.view(event)
+
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
