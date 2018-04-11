@@ -171,7 +171,7 @@ class bullet(bubble):
 			for j in range(grid._cols):
 				# Check if balls x is within a given slot
 				if not grid.grid[i][j].exists:
-					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS-1<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS+1:
+					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS-2<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS+2:
 						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS-1<=self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS+1:
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
