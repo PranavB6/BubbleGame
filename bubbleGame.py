@@ -29,7 +29,8 @@ gun.putInBox()
 
 pg.mixer.init()
 pg.mixer.music.load('song1.mp3')
-
+#invis cursor
+pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
 def main():
 
@@ -45,7 +46,7 @@ def main():
 	startLabel = font.render("Press Left Click To Start",True,BLACK)
 	endLabel = font.render("Loser Is You",True,BLACK)
 	endPrompt = font.render("Press R to restart",True,BLACK)
-
+	pygame.mixer.music.play(-1)
 	cheat_manager = cheatManager(gamegrid, gun)
 	while True:
 		scoreNum = font.render(str(gameInstance.score),True,BLACK)
@@ -73,15 +74,17 @@ def main():
 				# if event.key == pg.H_r:
 				# 	if 
 			#Lock game specific controls if game is over
-			if gameInstance.over:
-				break
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
+
+			if gameInstance.over:
+				break
+			
 			if event.type == pg.MOUSEBUTTONDOWN:
 				if not gameInstance.running:
 					gameInstance.running = True
-					pygame.mixer.music.play(-1)
+					
 
 				if gameBullet:
 					pass
@@ -108,6 +111,7 @@ def main():
 			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2)+random.choice(screenShake),DISP_H/2+random.choice(screenShake)) )
 			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2)+random.choice(screenShake),DISP_H/2+30+random.choice(screenShake)) )
 
+		drawCursor(mouse_pos)
 		pg.display.update()
 		clock.tick(60)
 	return

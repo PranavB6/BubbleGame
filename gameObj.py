@@ -340,3 +340,13 @@ def calcMouseAngle(mouse_pos):
 	height = (ARROW_BASE[1] - mouse_pos[1])
 	angle = atan2(height,width)
 	return max(min(angle,ANGLE_MAX),ANGLE_MIN)
+
+crosshair = pygame.image.load('crosshair.png')
+# Scale image
+sf = 00.20
+crosshair = pg.transform.scale(crosshair, (int(crosshair.get_width() * sf), int(crosshair.get_height() * sf)))
+crosshair_rect = crosshair.get_rect()
+
+def drawCursor(mouse_pos):
+	crosshair_rect.center = mouse_pos
+	display.blit(crosshair, crosshair_rect)
