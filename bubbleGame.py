@@ -9,7 +9,9 @@ from shooter_file import *
 #pretty easy to implement if we so choose
 #from collections import deque
 pg.init()
-
+pg.font.init()
+pg.mixer.init()
+pg.mixer.music.load('song1.mp3')
 #grid
 
 #create display
@@ -23,12 +25,12 @@ clock = pg.time.Clock()
 
 font = pg.font.SysFont("helvetica", 30)
 bigFont  = pg.font.SysFont("helvetica",60)
+centuryGothic = pg.font.Font("pixel.otf",30)
 
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
-pg.mixer.init()
-pg.mixer.music.load('song1.mp3')
+
 #invis cursor
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
@@ -42,14 +44,14 @@ def main():
 	gameBullet = None
 	gamegrid = gameGrid(gameInstance)
 	mouse_pos=(DISP_W/2, DISP_H/2)
-	scoreLabel = font.render("Score:",True,BLACK)
-	startLabel = font.render("Press Left Click To Start",True,BLACK)
-	endLabel = font.render("Loser Is You",True,BLACK)
-	endPrompt = font.render("Press R to restart",True,BLACK)
+	scoreLabel = centuryGothic.render("Score:",True,BLACK)
+	startLabel = centuryGothic.render("Press Left Click To Start",True,BLACK)
+	endLabel = centuryGothic.render("Loser Is You",True,BLACK)
+	endPrompt = centuryGothic.render("Press R to restart",True,BLACK)
 	pygame.mixer.music.play(-1)
 	cheat_manager = cheatManager(gamegrid, gun)
 	while True:
-		scoreNum = font.render(str(gameInstance.score),True,BLACK)
+		scoreNum = centuryGothic.render(str(gameInstance.score),True,BLACK)
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
@@ -107,7 +109,7 @@ def main():
 		if gameInstance.over:
 
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2)+random.choice(screenShake),DISP_H/2-30+random.choice(screenShake)) )
-			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,BLACK)
+			scoreNumEnd = centuryGothic.render("Score: "+str(gameInstance.score),True,BLACK)
 			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2)+random.choice(screenShake),DISP_H/2+random.choice(screenShake)) )
 			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2)+random.choice(screenShake),DISP_H/2+30+random.choice(screenShake)) )
 
