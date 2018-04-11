@@ -35,7 +35,7 @@ class cheatManager():
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['alongone', 'god', 'lol']
+		self.cheats = ['snipe', 'god', 'lol']
 		self.machines = [StateMachine() for cheat in self.cheats]
 
 	def view(self, event):
@@ -80,7 +80,7 @@ class cheatManager():
 					machine.set('begin')
 
 				#-------------------------------- Put cheat functions here --------------------------#
-				if cheat == 'alongone': self.alongone_cheat()
+				if cheat == 'snipe': self.snipe_cheat()
 				if cheat == 'god': self.god_cheat()
 				if cheat == 'lol': self.lol_cheat()
 				#------------------------------------------------------------------------------------#
@@ -91,11 +91,14 @@ class cheatManager():
 
 	#-------------------------------------------------- Put what the cheat function do here -------------------------- #
 
-	def alongone_cheat(self):
-		print('In alongone mode')
+	def snipe_cheat(self):
+		print('Activated Cheat: Snipe')
+		self.gun.aim_length = 600
+		self.gun.aim_width = 1
+		self.gun.aim_color = BLACK
 
 	def god_cheat(self):
-		print('god mode')
+		print('Entering God Mode')
 
 		for row in range(self.gamegrid.rows):
 			for col in range(self.gamegrid._cols):

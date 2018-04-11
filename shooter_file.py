@@ -30,9 +30,22 @@ class Shooter():
 		self.shooter_w = self.shooter_rect[2]
 		self.shooter_h = self.shooter_rect[3]
 
+		self.loaded_pos = self.pos
+		self.reload1_pos = (self.pos[0] + 7*BUBBLE_RADIUS + 4, self.pos[1] - BUBBLE_RADIUS - 5)
+		self.reload2_pos = (self.pos[0] + 9*BUBBLE_RADIUS + 4, self.pos[1] - BUBBLE_RADIUS - 5)
+		self.reload3_pos = (self.pos[0] + 11*BUBBLE_RADIUS + 4, self.pos[1] - BUBBLE_RADIUS - 5)
 
-		self.loaded = bubble(random.choice(BALL_COLOURS), self.pos)
 		self.fired = None
+		self.loaded = bubble(random.choice(BALL_COLOURS), self.pos)
+		self.reload1 = bubble(random.choice(BALL_COLOURS), self.reload1_pos)
+		self.reload2 = bubble(random.choice(BALL_COLOURS), self.reload2_pos)
+		self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos) 
+
+		self.aim_length = 200
+		self.aim_width = 1
+		self.aim_color = RED
+		
+		
 		self.angle = 90
 
 		return
@@ -57,12 +70,11 @@ class Shooter():
 
 	def draw_line(self):
 
-		length = 200
-
 		# line(Surface, color, start_pos, end_pos, width=1) -> Rect
-		end = ( (math.cos(math.radians(self.angle)) * length) + display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * length))
+		end = ( (math.cos(math.radians(self.angle)) * self.aim_length) 
+				+ display_rect[2]/2, display_rect[3] - (math.sin(math.radians(self.angle)) * self.aim_length))
 		
-		pg.draw.line(display, RED , self.pos, end, 1)
+		pg.draw.line(display, self.aim_color , self.pos, end, self.aim_width)
 
 		return
 
@@ -107,6 +119,9 @@ class Shooter():
 		if self.fired:
 			self.fired.updatePos(game)
 		self.loaded.draw(game)
+		self.reload1.draw(game)
+		self.reload2.draw(game)
+		self.reload3.draw(game)
 		return
 
 	def fire(self):
@@ -114,5 +129,9 @@ class Shooter():
 		rads = math.radians(self.angle)
 		if self.fired is None:
 			self.fired = bullet( self.loaded.color, self.pos, rads )
-			self.loaded = bubble(random.choice(BALL_COLOURS),(self.pos))
+			self.loaded = bubble(self.reload1.color, self.pos)
+			self.reload1 = bubble(self.reload2.color, self.reload1_pos)
+			self.reload2 = bubble(self.reload3.color, self.reload2_pos)
+			self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos) 
+
 		return
