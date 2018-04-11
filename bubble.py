@@ -20,11 +20,17 @@ class bubble():
 		# circle(Surface, color, pos, radius, width=0) -> Rect
 		x, y = int(self.pos[0]), int(self.pos[1])
 
+
 		# filled_circle(surface, x, y, r, color) -> None
 		pg.gfxdraw.filled_circle(display, x, y, BUBBLE_RADIUS - 1, self.color)
 
+
+		r, g, b = self.color
+		color_offset = 110
+		outline = (max(r - color_offset,0), max(g - color_offset, 0), max(b - color_offset, 0))
+
 		# circle(surface, x, y, r, color) -> None
-		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, self.color)
+		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, outline)
 
 
 class gridBubble(bubble):
