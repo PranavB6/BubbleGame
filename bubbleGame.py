@@ -9,8 +9,7 @@ from shooter_file import *
 #pretty easy to implement if we so choose
 #from collections import deque
 pg.init()
-#FDSFSD
-#grid
+pg.mixer.init()
 pg.font.init()
 
 #create display
@@ -28,7 +27,7 @@ bigFont  = pg.font.Font("pixel.otf",60)
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
-pg.mixer.init()
+
 pg.mixer.music.load('song1.mp3')
 #invis cursor
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
