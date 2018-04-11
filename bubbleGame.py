@@ -37,12 +37,12 @@ def main():
 	gameBullet = None
 	gamegrid = gameGrid()
 	mouse_pos=(DISP_W/2, DISP_H/2)
-	scoreLabel = font.render("Score:",True,WHITE)
-	startLabel = font.render("Press Left Click To Start",True,WHITE)
-	endLabel = font.render("Loser Is You",True,WHITE)
-	endPrompt = font.render("Press R to restart",True,WHITE)
+	scoreLabel = font.render("Score:",True,BLACK)
+	startLabel = font.render("Press Left Click To Start",True,BLACK)
+	endLabel = font.render("Loser Is You",True,BLACK)
+	endPrompt = font.render("Press R to restart",True,BLACK)
 	while True:
-		scoreNum = font.render(str(gameInstance.score),True,WHITE)
+		scoreNum = font.render(str(gameInstance.score),True,BLACK)
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
@@ -61,6 +61,8 @@ def main():
 				if event.key == pg.K_r or pg.K_r and pg.key.get_mods() & pg.KMOD_SHIFT:
 					if gameInstance.over:
 						return
+				# if event.key == pg.H_r:
+				# 	if 
 			#Lock game specific controls if game is over
 			if gameInstance.over:
 				break
@@ -93,8 +95,8 @@ def main():
 		if gameInstance.over:
 
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2)+random.choice(screenShake),DISP_H/2-30+random.choice(screenShake)) )
-			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,WHITE)
-			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2),DISP_H/2) )
+			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,BLACK)
+			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2)+random.choice(screenShake),DISP_H/2+random.choice(screenShake)) )
 			display.blit(endPrompt,(DISP_W/2-(endPrompt.get_width()/2)+random.choice(screenShake),DISP_H/2+30+random.choice(screenShake)) )
 
 		pg.display.update()
