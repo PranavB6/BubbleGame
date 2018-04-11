@@ -3,41 +3,36 @@ import pygame.gfxdraw
 import time,random
 
 
-
+#Bubble class. Is inherited by gridBubble and Bullet
 class bubble():
 	def __init__(self,color,pos):
 		self.radius= BUBBLE_RADIUS
 		self.color = color
 		self.prev_color = color
 		self.pos = pos
-		# self.initImages()
-		# self.image = self.setImage()
 
+		#Draws bubble to screen. Does not draw null bubbles, and shakes bubbles if
+		#the screen is about to fall
 	def draw(self,game):
-
 		if self.color == BG_COLOUR: return
-
 		ballShake = [-1,0,1]
-		# circle(Surface, color, pos, radius, width=0) -> Rect
 		x, y = int(self.pos[0]), int(self.pos[1])
 		if hasattr(game, 'ballCounter'):
 			if (game.ballCounter+1) % 6 == 0 and game.ballCounter != 0:
 				x += random.choice(ballShake)
 				y += random.choice(ballShake)
 
-
-		# filled_circle(surface, x, y, r, color) -> None
 		pg.gfxdraw.filled_circle(display, x, y, BUBBLE_RADIUS - 1, self.color)
-
 
 		r, g, b = self.color
 		color_offset = 110
-		outline = (max(r - color_offset,0), max(g - color_offset, 0), max(b - color_offset, 0))
 
-		# circle(surface, x, y, r, color) -> None
+		outline = (max(r - color_offset,0), max(g - color_offset, 0), max(b - color_offset, 0))
 		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, outline)
 
 
+#subclass of the bubble class, contains proteries pertaining to the logic of the game grid
+#and objects of this class are elements of the game grid.
 class gridBubble(bubble):
 	def __init__(self,color,row,col,exists, grid):
 		self.row = row
@@ -52,6 +47,7 @@ class gridBubble(bubble):
 		self.DL = None
 		self.DR = None 
 
+	#Calculates the x and y position of the bubble based on it's rows and columns
 	def calcPos(self, grid):
 		x = (self.col * ((ROOM_WIDTH-BUBBLE_RADIUS) / (GRID_COLS)))+WALL_BOUND_L+BUBBLE_RADIUS
 		if (self.row % 2 == grid.even_offset):
@@ -59,6 +55,8 @@ class gridBubble(bubble):
 		y = BUBBLE_RADIUS + self.row*BUBBLE_RADIUS*2
 		self.pos = (x,y)
 
+	#Gets neighbours by checking the grid it's in, and storing each neighbours row and col attribute as
+	#a neighbour attribute. Does not count null grid bubbles as neighbours
 	def initNeighb(self,grid):
 		self.L = None
 		self.R = None
@@ -109,7 +107,7 @@ class gridBubble(bubble):
 						self.DR = (self.row + 1, self.col + 1)
 
 
-
+	#Gets list of all of it's non null neighbours
 	def getNeighbs(self):
 
 		neighbs = [self.L, self.R, self.UL, self.UR, self.DL, self.DR]
@@ -118,14 +116,13 @@ class gridBubble(bubble):
 		for neighb in neighbs:
 			if neighb: alive.append(neighb)
 		return alive
-
+	#Tell each of it's neighbours to recalculate their neighbours
 	def updateNeighbs(self,grid):
 		neighbs = self.getNeighbs()
 		for neighb in neighbs:
 			grid.grid[neighb[0]][neighb[1]].initNeighb(grid)
 
-	#MIGHT CAUSE NAMESPACE ISSUES
-
+	#Pop self, removing it from the grid, and spawning a falling bubble animmation
 	def popSelf(self, grid):
 		self.exists = False
 		bubble_color = self.color
@@ -148,13 +145,15 @@ class gridBubble(bubble):
 		grid.animations.append(animate_lst)
 
 
-
+#Subclass of bubble. Has properties pertaining to movement, such as it;s velocity and
+#if it's out of bounds
 class bullet(bubble):
 	def __init__(self,color,pos,angle):
 		bubble.__init__(self,color,pos)
 		self.x_vel = cos(angle) * BUBBLE_VEL
 		self.y_vel = sin(angle) * BUBBLE_VEL
 		self.out_of_bounds = False
+	#update bullets position and draw the bullet to the screen.
 	def updatePos(self,game):
 		if self.pos[0]-BUBBLE_RADIUS <= WALL_BOUND_L:
 			self.x_vel = self.x_vel * -1
@@ -166,22 +165,16 @@ class bullet(bubble):
 		y_pos -= self.y_vel
 		self.pos = (x_pos,y_pos)
 		self.draw(game)
+	#Called when collided with the grid. check what position in the grid the bullet should go into.
 	def getGridPos(self,grid):
 		for i in range(grid.rows):	
 			for j in range(grid._cols):
-
 				# Check if balls x is within a given slot
 				if not grid.grid[i][j].exists:
-					# print("SFDFDS")
-					#TODO: COLLISIONS ARE NOT SPOT ON. WILL FAIL IF YOU FIRE HEAD ON.
 					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS-1<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS+1:
-						# print("PASS 1")
 						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS-1<=self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS+1:
-							# print("HIT")
-							#print(str(i)+","+str(j))
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
 							self.out_of_bounds=True
 							self=None
 							return i,j
-	#TODO: implement a function that takes postions and snaps it onto the grid.
