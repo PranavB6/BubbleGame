@@ -182,7 +182,7 @@ class gameGrid():
 					if gridElement.exists:
 						dx = gridElement.pos[0] - bullet_pos[0]
 						dy = gridElement.pos[1] - bullet_pos[1]
-						combRadius = BUBBLE_RADIUS * 2
+						combRadius = (BUBBLE_RADIUS-1) * 2
 						if((int(dx)**2)+(int(dy)**2)<int(combRadius)**2):
 							##BULLET HITS GRID##
 							bulletGridPos = bullet.getGridPos(self)

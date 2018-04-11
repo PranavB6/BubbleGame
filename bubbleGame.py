@@ -48,7 +48,6 @@ def main():
 	startLabel = centuryGothic.render("Press Left Click To Start",True,BLACK)
 	endLabel = centuryGothic.render("Loser Is You",True,BLACK)
 	endPrompt = centuryGothic.render("Press R to restart",True,BLACK)
-	pygame.mixer.music.play(-1)
 
 
 	cheat_manager = cheatManager(gamegrid, gun)
@@ -123,6 +122,7 @@ def main():
 	return
 
 if __name__ == '__main__':
+	#pygame.mixer.music.play(-1)
 	#Call main in True loop to allow it to reset it self if. main returns when r is pressed.
 	while True:
 		main()
