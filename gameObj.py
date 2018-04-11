@@ -211,9 +211,9 @@ bg = pg.transform.scale(bg, (int(bg_w * sf), int(bg_h * sf)))
 
 def drawBackground():
 	display.blit(bg, (0,0))
-	# pg.draw.line(display, BLUE, (WALL_BOUND_L, 0), (WALL_BOUND_L, DISP_H))
-	# pg.draw.line(display, BLUE, (WALL_BOUND_R, 0), (WALL_BOUND_R, DISP_H))
-	# pg.draw.line(display, RED, (WALL_BOUND_L, DISP_H - FLOOR_HEIGHT), (WALL_BOUND_R, DISP_H - FLOOR_HEIGHT))
+	pg.draw.line(display, BLUE, (WALL_BOUND_L, 0), (WALL_BOUND_L, DISP_H))
+	pg.draw.line(display, BLUE, (WALL_BOUND_R, 0), (WALL_BOUND_R, DISP_H))
+	pg.draw.line(display, RED, (WALL_BOUND_L, DISP_H - FLOOR_HEIGHT), (WALL_BOUND_R, DISP_H - FLOOR_HEIGHT))
 	# pg.draw.rect(display,MIDDLE_GRAY,WALL_RECT_FLOOR)
 	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
 	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)

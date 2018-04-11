@@ -114,5 +114,5 @@ class Shooter():
 		rads = math.radians(self.angle)
 		if self.fired is None:
 			self.fired = bullet( self.loaded.color, self.pos, rads )
-			self.loaded = bubble(random.choice(BALL_COLOURS),self.pos)
+			self.loaded = bubble(random.choice(BALL_COLOURS),(self.pos))
 		return

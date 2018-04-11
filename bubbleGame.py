@@ -28,7 +28,7 @@ gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
 pg.mixer.init()
-pg.mixer.music.load('hatsune_miku_love_and_dreams.mp3')
+pg.mixer.music.load('song1.mp3')
 
 def main():
 	screenShake = [-1,0,1]
@@ -72,7 +72,7 @@ def main():
 			if event.type == pg.MOUSEBUTTONDOWN:
 				if not gameInstance.running:
 					gameInstance.running = True
-					pygame.mixer.music.play()
+					pygame.mixer.music.play(-1)
 
 				if gameBullet:
 					pass
