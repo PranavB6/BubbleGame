@@ -41,7 +41,7 @@ class Shooter():
 		self.reload2 = bubble(random.choice(BALL_COLOURS), self.reload2_pos)
 		self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos) 
 
-		self.aim_length = 200
+		self.aim_length = 300
 		self.aim_width = 1
 		self.aim_color = RED
 
