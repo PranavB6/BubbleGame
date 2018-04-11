@@ -30,6 +30,10 @@ class bubble():
 		outline = (max(r - color_offset,0), max(g - color_offset, 0), max(b - color_offset, 0))
 		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, outline)
 
+		# square = pg.Surface(((BUBBLE_RADIUS+2)*2,(BUBBLE_RADIUS+2)*2), pygame.SRCALPHA, 32)
+		# square.fill((255,0,0,100))
+		# display.blit(square,(int(self.pos[0]-square.get_width()/2),int(self.pos[1]-square.get_height()/2)))
+
 
 #subclass of the bubble class, contains proteries pertaining to the logic of the game grid
 #and objects of this class are elements of the game grid.
@@ -171,7 +175,7 @@ class bullet(bubble):
 			for j in range(grid._cols):
 				# Check if balls x is within a given slot
 				if not grid.grid[i][j].exists:
-					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS-2<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS+2:
+					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS-1<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS+1:
 						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS-1<=self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS+1:
 							grid.grid[i][j].color=self.color
 							grid.grid[i][j].exists=True
