@@ -44,6 +44,8 @@ class Shooter():
 		self.aim_length = 200
 		self.aim_width = 1
 		self.aim_color = RED
+
+		self.explosion = False
 		
 		
 		self.angle = 90
@@ -134,4 +136,7 @@ class Shooter():
 			self.reload2 = bubble(self.reload3.color, self.reload2_pos)
 			self.reload3 = bubble(random.choice(BALL_COLOURS), self.reload3_pos) 
 
+			if self.explosion == True: 
+				self.fired.explosion = True
+				self.explosion = False
 		return

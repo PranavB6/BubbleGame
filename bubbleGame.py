@@ -47,8 +47,11 @@ def main():
 	endLabel = font.render("Loser Is You",True,BLACK)
 	endPrompt = font.render("Press R to restart",True,BLACK)
 	pygame.mixer.music.play(-1)
+
+
 	cheat_manager = cheatManager(gamegrid, gun)
 	while True:
+
 		scoreNum = font.render(str(gameInstance.score),True,BLACK)
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
