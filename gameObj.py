@@ -35,7 +35,8 @@ class cheatManager():
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['snipe', 'god', 'lol']
+		self.cheats = ['snipe', 'god', 'STEVEJOBS', 'lol']
+
 		self.machines = [StateMachine() for cheat in self.cheats]
 
 	def view(self, event):
@@ -83,6 +84,7 @@ class cheatManager():
 				if cheat == 'snipe': self.snipe_cheat()
 				if cheat == 'god': self.god_cheat()
 				if cheat == 'lol': self.lol_cheat()
+				if cheat == 'STEVEJOBS': self.saviour_cheat()
 				#------------------------------------------------------------------------------------#
 
 			else: machine.set('begin')
@@ -107,6 +109,9 @@ class cheatManager():
 
 	def lol_cheat(self):
 		print('lol')
+
+	def saviour_cheat(self):
+		print('I LOVE APPLE AND APPLE LOVES ME')
 
 class game():
 	def __init__(self):
@@ -343,3 +348,13 @@ def calcMouseAngle(mouse_pos):
 	height = (ARROW_BASE[1] - mouse_pos[1])
 	angle = atan2(height,width)
 	return max(min(angle,ANGLE_MAX),ANGLE_MIN)
+
+crosshair = pygame.image.load('crosshair.png')
+# Scale image
+sf = 00.20
+crosshair = pg.transform.scale(crosshair, (int(crosshair.get_width() * sf), int(crosshair.get_height() * sf)))
+crosshair_rect = crosshair.get_rect()
+
+def drawCursor(mouse_pos):
+	crosshair_rect.center = mouse_pos
+	display.blit(crosshair, crosshair_rect)

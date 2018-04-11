@@ -172,9 +172,9 @@ class bullet(bubble):
 				if not grid.grid[i][j].exists:
 					# print("SFDFDS")
 					#TODO: COLLISIONS ARE NOT SPOT ON. WILL FAIL IF YOU FIRE HEAD ON.
-					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS<self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS:
+					if grid.grid[i][j].pos[0]-BUBBLE_RADIUS<=self.pos[0]<=grid.grid[i][j].pos[0]+BUBBLE_RADIUS:
 						# print("PASS 1")
-						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS<self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS:
+						if grid.grid[i][j].pos[1]-BUBBLE_RADIUS<=self.pos[1]<=grid.grid[i][j].pos[1]+BUBBLE_RADIUS:
 							# print("HIT")
 							#print(str(i)+","+str(j))
 							grid.grid[i][j].color=self.color
