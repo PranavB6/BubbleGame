@@ -22,7 +22,6 @@ pg.display.set_caption(CAPTION)
 clock = pg.time.Clock()
 
 font = pg.font.Font("pixel.otf", 30)
-bigFont  = pg.font.Font("pixel.otf",60)
 
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
@@ -33,9 +32,6 @@ pg.mixer.music.load('song1.mp3')
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
 def main():
-
-	
-
 	screenShake = [-1,0,1]
 	gameInstance = game()
 	mouse_angle = pi/2
@@ -53,17 +49,15 @@ def main():
 		drawBackground()
 		display.blit(scoreNum,(WALL_BOUND_R-(scoreNum.get_width()/2)+WALL_WIDTH/2,120))
 		display.blit(scoreLabel,(WALL_BOUND_R-(scoreLabel.get_width()/2)+WALL_WIDTH/2,90))
-		
-
 		for event in pg.event.get():
 			if event.type == pg.QUIT:
 				pg.quit()
 				quit()
-			#Ctrl+C to quit
 			if event.type == pg.KEYDOWN:
-
+				#Have cheat manager view key events
 				cheat_manager.view(event)
 
+				#Ctrl+C to quit
 				if event.key == pg.K_c and pg.key.get_mods() & pg.KMOD_CTRL:
 					pg.quit()
 					quit()
@@ -71,21 +65,18 @@ def main():
 				if event.key == pg.K_r or pg.K_r and pg.key.get_mods() & pg.KMOD_SHIFT:
 					if gameInstance.over:
 						return
-				# if event.key == pg.H_r:
-				# 	if 
-			#Lock game specific controls if game is over
+
 			if event.type == pg.MOUSEMOTION:
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 
+			#Lock game specific controls if game is over
 			if gameInstance.over:
 				break
 			
 			if event.type == pg.MOUSEBUTTONDOWN:
 				if not gameInstance.running:
 					gameInstance.running = True
-					
-
 				if gameBullet:
 					pass
 				else:
@@ -94,18 +85,21 @@ def main():
 		if gun.fired:
 			gamegrid.check(gun.fired.pos,gun.fired,gameInstance)
 
+		#Draw all balls in the grid
 		gamegrid.draw(gameInstance)
+
+		#rotate gun and draw accordningly based mon mouses position
 		gun.rotate(mouse_pos)
-
 		gun.draw_bullet(gameInstance)
-
+		#Check the game if its over (ie. rows exceed the given threshold)
 		gameInstance.checkGameOver(gamegrid,clock,game)
 
+		#Give starting prompt when game isn't running
 		if not gameInstance.running:
 			display.blit(startLabel,(DISP_W/2-(startLabel.get_width()/2),DISP_W/2))
 
+		#Display gameover text if game is over.
 		if gameInstance.over:
-
 			display.blit(endLabel,(DISP_W/2-(endLabel.get_width()/2)+random.choice(screenShake),DISP_H/2-30+random.choice(screenShake)) )
 			scoreNumEnd = font.render("Score: "+str(gameInstance.score),True,BLACK)
 			display.blit(scoreNumEnd,(DISP_W/2-(scoreNumEnd.get_width()/2)+random.choice(screenShake),DISP_H/2+random.choice(screenShake)) )
