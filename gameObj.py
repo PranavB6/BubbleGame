@@ -104,6 +104,7 @@ class cheatManager():
 		self.gun.loaded.color = BLACK
 
 
+
 class game():
 	def __init__(self):
 		self.over = False
@@ -130,7 +131,7 @@ class game():
 					self.over = True
 
 
-			
+#Grid object that contains a matrix of all the gridBubbles
 class gameGrid():
 	def __init__(self,game):
 		self.rows = GRID_ROWS
@@ -146,11 +147,11 @@ class gameGrid():
 				self.grid[i][j].draw(game)
 		self.initNeighbGrid()
 
+	#Draw all contained balls and any falling balls
 	def draw(self,game):
 		for i in range(self.rows):
 			for j in range(self._cols):
 				if self.grid[i][j]:
-					# print('(row, col) = {}, {})'.format(i, j))
 					self.grid[i][j].draw(game)
 
 		for animation in self.animations:
@@ -160,6 +161,8 @@ class gameGrid():
 			frame = animation.pop()
 			frame.draw(game)
 
+	#Check if/where the bullet object collides with one of the grid elements.
+	#Incorporate the bullet into a grid posistion when bullet has collided
 	def check(self,bullet_pos,bullet,game):
 		if bullet == None or bullet.out_of_bounds:
 			return
@@ -186,6 +189,8 @@ class gameGrid():
 							pass
 		if bullet_pos[1]-BUBBLE_RADIUS < 0:
 			bulletGridPos = bullet.getGridPos(self)
+			#When adding the bullet to the grid, store each of it's neightbouts information
+			#and update the neighbours information.
 			if bulletGridPos:
 				self.grid[bulletGridPos[0]][bulletGridPos[1]].initNeighb(self)
 				self.grid[bulletGridPos[0]][bulletGridPos[1]].updateNeighbs(self)
@@ -193,24 +198,24 @@ class gameGrid():
 				return
 			else:
 				bullet.out_of_bounds = True
+		#TODO: Append top??
 		#Check if the bottom row is completely null, if not, add a null row
 		for j in range(self._cols):
 			if self.grid[self.rows-1][j].exists:
 				self.appendBottom()
 
+	#Whenever a ball is added to the bottom most row, add another row of empty bubbles.
+	#This is needed so bullets can append themselves to the the next row, ass 
+	#appending requires null balls to be existant.
 	def appendBottom(self):
 		row = []
 		color = BG_COLOUR
-
-		# if self.rows <= 17:
-		# 	color = BG_COLOUR
-		# else:
-		# 	color = MIDDLE_GRAY
 		for j in range(self._cols):
 			row.append(gridBubble(color,self.rows,j,False, self))
 		self.grid.append(row)	
 		self.rows += 1
 
+	#Tell each grid element to find its neighbors
 	def initNeighbGrid(self):
 		for row in range(self.rows):
 			for col in range(self._cols):
@@ -218,17 +223,14 @@ class gameGrid():
 
 		return
 
+	#Uses search() to find all neighbours of matching color.
+	#pops bubbles in reached iff there are atleast three bubbles
+	#of matching colour
 	def popCluster(self,bulletGridPos,game):
-		
 		pop = False
 		to_pop = []
 		to_pop_n = 0
-
-		# print('Blast point:', bulletGridPos[0], bulletGridPos[1] )
 		reached = self.search(self.grid[bulletGridPos[0]][bulletGridPos[1]])
-		# print()
-
-
 		rooted = self.rootSearch(self.grid[bulletGridPos[0]][bulletGridPos[1]])
 
 		if len(reached)>=3: pop = True
@@ -252,23 +254,26 @@ class gameGrid():
 						to_pop_n += 1
 		return
 
+	#Pops a given cluster of balls, using depth first search.
+	#Calls itself recursively until all nodes of the same colour
+	#have been reached. Returns reached
 	def search(self, bubble, reached = None):
 
 		if reached == None: 
 			reached = []
-
-		if bubble in reached: return
+		if bubble in reached:
+			return
 
 		reached.append(bubble)
 
 		for neighb in bubble.getNeighbs():
 			new_bubble = self.grid[neighb[0]][neighb[1]]
-
 			if new_bubble.exists:
 				if (new_bubble.color == bubble.color) or (bubble.color == BLACK):
 					self.search(new_bubble, reached)	
 		return reached
 
+	#Append a top row. Adds a top row of bubbles to the grid, and pushes all rows below it down by one.
 	def appendTop(self):
 
 		self.even_offset = not self.even_offset
@@ -289,6 +294,8 @@ class gameGrid():
 
 		return
 
+	#Searches if balls are rooted to the top of the game. If not, the balls are returned to
+	#Be popped off.
 	def rootSearch(self, bubble, rooted = False, reached = None):
 		if reached == None: reached = []
 		if bubble not in reached:
@@ -301,7 +308,7 @@ class gameGrid():
 		return rooted
 
 
-# bg = pg.image.load('bg.jpg').convert()
+#Load and draw background image
 bg = pg.image.load('bg.png').convert()
 _, _, bg_w, bg_h = bg.get_rect()
 sf = 0.8
@@ -323,11 +330,13 @@ def drawBackground():
 	display.blit(wall,(0,0))
 	display.blit(wall,(WALL_BOUND_R,0))
 
+#Draws the laser based on the angle of the mouse relative to the bottom center of the window.
 def drawArrow(arrow_angle):
 	#print(arrow_angle)
 	arrow_head = calcArrowHead(arrow_angle)
 	pg.draw.line(display,BLACK,ARROW_BASE,arrow_head)
 
+#Calculate the tip of the laser
 def calcArrowHead(arrow_angle):
 	x = int(cos(arrow_angle)*ARROW_LENGTH)
 	y = int(sin(arrow_angle)*ARROW_LENGTH)
@@ -335,18 +344,18 @@ def calcArrowHead(arrow_angle):
 	y = ARROW_BASE[1] - y
 	return (x,y)
 
+#Calculate angle of the mouse relative to the bottom center of the screen.
 def calcMouseAngle(mouse_pos):
 	width = mouse_pos[0] - ARROW_BASE[0]
 	height = (ARROW_BASE[1] - mouse_pos[1])
 	angle = atan2(height,width)
 	return max(min(angle,ANGLE_MAX),ANGLE_MIN)
 
+#Load and draw crosshair
 crosshair = pygame.image.load('crosshair.png')
-# Scale image
 sf = 00.20
 crosshair = pg.transform.scale(crosshair, (int(crosshair.get_width() * sf), int(crosshair.get_height() * sf)))
 crosshair_rect = crosshair.get_rect()
-
 def drawCursor(mouse_pos):
 	crosshair_rect.center = mouse_pos
 	display.blit(crosshair, crosshair_rect)
