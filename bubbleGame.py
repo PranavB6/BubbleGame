@@ -10,7 +10,6 @@ from shooter_file import *
 #from collections import deque
 pg.init()
 
-
 #grid
 
 #create display
@@ -27,6 +26,9 @@ bigFont  = pg.font.SysFont("helvetica",60)
 
 gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
+
+pg.mixer.init()
+pg.mixer.music.load('hatsune_miku_love_and_dreams.mp3')
 
 def main():
 	screenShake = [-1,0,1]
@@ -66,7 +68,10 @@ def main():
 				mouse_pos = pg.mouse.get_pos()
 				mouse_angle = calcMouseAngle(mouse_pos)
 			if event.type == pg.MOUSEBUTTONDOWN:
-				gameInstance.running = True
+				if not gameInstance.running:
+					gameInstance.running = True
+					pygame.mixer.music.play()
+
 				if gameBullet:
 					pass
 				else:
