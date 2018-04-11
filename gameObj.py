@@ -35,7 +35,7 @@ class cheatManager():
 		self.alphabet = set(string.ascii_lowercase)
 
 		#----------------------------------- Put you cheat codes here --------------------------------#
-		self.cheats = ['god', 'explosion', 'abc']
+		self.cheats = ['god', 'explosion']
 		self.machines = [StateMachine() for cheat in self.cheats]
 
 	def view(self, event):
@@ -319,9 +319,7 @@ def drawBackground():
 	pg.draw.line(display, BLUE, (WALL_BOUND_L, 0), (WALL_BOUND_L, DISP_H))
 	pg.draw.line(display, BLUE, (WALL_BOUND_R, 0), (WALL_BOUND_R, DISP_H))
 	pg.draw.line(display, RED, (WALL_BOUND_L, DISP_H - FLOOR_HEIGHT), (WALL_BOUND_R, DISP_H - FLOOR_HEIGHT))
-	# pg.draw.rect(display,MIDDLE_GRAY,WALL_RECT_FLOOR)
-	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_L)
-	# pg.draw.rect(display,DARK_GRAY,WALL_RECT_R)
+
 	wall = pg.Surface((WALL_WIDTH,DISP_H), pygame.SRCALPHA, 32)
 	floor = pg.Surface((ROOM_WIDTH,FLOOR_HEIGHT),pygame.SRCALPHA, 32)
 	wall.fill((122,122,122,122))

@@ -40,7 +40,7 @@ WALL_RECT_FLOOR = pg.Rect(0, WALL_BOUND_FLOOR, DISP_W, FLOOR_HEIGHT)
 
 # Shooter's Aimer constants
 ARROW_BASE = (int(DISP_W/2),DISP_H)
-ARROW_LENGTH = 250
+ARROW_LENGTH = 600
 
 # Min and max degrees that the shooter can rotate in
 ANGLE_MAX = 180 - 15
