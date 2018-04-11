@@ -10,6 +10,7 @@ class bubble():
 		self.color = color
 		self.prev_color = color
 		self.pos = pos
+		self.past_time = 0
 
 	def draw(self,game):
 
@@ -21,12 +22,15 @@ class bubble():
 
 		if hasattr(game, 'ballCounter'):
 				if (game.ballCounter+1) % 6 == 0 and game.ballCounter != 0:
-					x += random.choice(ballShake)
-					y += random.choice(ballShake)
+
+					if (time.time() - self.past_time) > 0.1:
+						self.past_time = time.time()
+						x += random.choice(ballShake)
+						y += random.choice(ballShake)
 
 
 		# filled_circle(surface, x, y, r, color) -> None
-		pg.gfxdraw.filled_circle(display, x, y, BUBBLE_RADIUS - 1, self.color)
+		pg.gfxdraw.filled_circle(display, x, y, self.radius - 1, self.color)
 
 
 		r, g, b = self.color
@@ -34,7 +38,7 @@ class bubble():
 		outline = (max(r - color_offset,0), max(g - color_offset, 0), max(b - color_offset, 0))
 
 		# circle(surface, x, y, r, color) -> None
-		pg.gfxdraw.aacircle(display, x, y, BUBBLE_RADIUS - 1, outline)
+		pg.gfxdraw.aacircle(display, x, y, self.radius - 1, outline)
 
 
 class gridBubble(bubble):
