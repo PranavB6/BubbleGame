@@ -27,7 +27,7 @@ gun = Shooter(pos = BOTTOM_CENTER)
 gun.putInBox()
 
 
-pg.mixer.music.load('song1.mp3')
+pg.mixer.music.load('hatsune_miku_love_and_dreams.mp3')
 #invis cursor
 pygame.mouse.set_cursor((8,8),(0,0),(0,0,0,0,0,0,0,0),(0,0,0,0,0,0,0,0))
 
