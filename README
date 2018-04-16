@@ -1,0 +1,49 @@
+Trouble Bubble (Ball Shooting Game)
+By Pranav Bodawala and Christian Lo
+CCID _________ and 1498360
+
+DESC:
+	Trouble Bubble is a match-3 bubble shooting game, that is simmilar to the likes of Bust-A-Move:
+	https://www.youtube.com/watch?v=IApIiLoE0ME
+
+	This project utilizes both object inheretance as well as depth-first-search and graph theory 
+	when deciding whether or not to pop a cluster of bubbles.
+
+PREREQUISITES:
+	This game requires both python3, pip3, as well as pygame.
+	To install pygame, simply type in the terminal:
+	pip3 install pygame
+
+RULES:
+	In this arcade game, the objective is to get as many points as posible within your play session.
+	A grid is initialized, consisting of various bubbles of different colours. Shooting a bullet at the
+	grid will pop some of these bubbles if the bullet forms a cluster of bubbles with atleast two other bubbles
+	of the same color. A point for each bubble popped will be awarded.
+
+	Additionally, bubbles can be popped if there are no bubbles holding them to the ceiling (ie. floating bubbles
+	will pop themselves).
+
+	The grid will fall down by a row after a set amount of shots (6 by default), and the player will lose if any
+	bubbles cross the gameover threshold (the red rectangle).
+
+	The color of the bubble at the base of the cannon is the color about to be fired. The bubbles to the side
+	indicate the colours of the next shots that is to be fired.
+
+CONTROLS:
+	The controls for the main game loop revolve around moving the mouse to postion the bubble cannon.
+	Left clicking will fire the cannon. If the game is over, press R to reset the game. Press CTRL+C or
+	the window exit button to quit.
+
+	In addition, a cheat system is implemented as a strech goal for the players enjoyment.
+	These cheats, while fun, effectively make the game much easier than intended and may cause unintended game behaviour.
+	As a result, the cheat system should be used at the discretion of the player. 
+
+	To enter a cheat, simply type the string correlating to the cheat, and a response in the terminal
+	will only show up if every letter has been typed correctly.
+
+CHEATS:
+	god			- Makes all bubbles in the grid the same color as the bullet to be fired
+	explosion	- Makes current bullet black. This black ball will act as a wild card, and will pop all clusters
+				around it, regaurdless of color. If the bomb does not make a cluster of three, however, it will
+				become inert, and will not be able to be destroyed unless the bubble is "falling". This is
+				intended to provide a risk/reward scenario.
